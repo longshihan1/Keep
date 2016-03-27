@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#FF232323"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:id="@+id/title_relative"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp">
+
+        <ImageButton
+            android:id="@+id/title_train"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/title_backgroung"
+            android:background="@mipmap/train_data_grandtotal_label"
+            android:layout_marginLeft="@dimen/title_backgroung" />
+
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="Train"
+            android:textColor="@color/wheat"
+            android:textSize="30dp"
+            android:layout_marginTop="@dimen/title_backgroung" />
+
+        <ImageButton
+            android:id="@+id/title_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/add_train_on"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="@dimen/title_backgroung"
+            android:layout_marginTop="@dimen/title_backgroung" />
+    </RelativeLayout>
+
+</LinearLayout>

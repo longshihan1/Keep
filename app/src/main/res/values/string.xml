@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Train</string>
+    <!--splash1-->
+    <string name="splash_title1">您的私人锻炼教练</string>
+    <string name="register">注册</string>
+    <string name="login">登录</string>
+
+    <!--注册-->
+    <string name="register_phone">获取验证码</string>
+    <string name="register_txt">点击下一步，则同意</string>
+    <string name="register_next">下一步</string>
+    <string name="splash_title"></string>
+    <string name="register_privacy">《隐私协议》</string>
+    <string name="register_Perfectinformation">完善信息</string>
+    <string name="register_nick">请输入昵称</string>
+    <string name="register_psd">请输入密码(请输入数字和字母组合)</string>
+    <string name="register_psd_re">请重复输入密码</string>
+    <!--train_fragment-->
+    <string name="main_title_train">训练计划</string>
+    <string name="main_train_text_leara_lin3_2">全身</string>
+    <string name="main_train_text_leara_lin2_1">K1 零基础</string>
+    <string name="main_train_text_leara_lin1">零基础适应性训练</string>
+    <string name="main_train_text_leara_lin3_1">8 节</string>
+    <string name="main_train_text_leara_lin2_2">无器械</string>
+    <string name="main_train_text_leara1_lin4">已参加</string>
+    <string name="main_train_text_leara1_lin1">五维腹肌训练计划</string>
+    <string name="main_train_text_leara2_lin1">HIIT适应性训练</string>
+    <string name="main_title_train1">单次训练</string>
+    <string name="main_train_lin_wheat_1">缓解腰酸背痛</string>
+    <string name="main_train_lin_wheat_2">腹肌训练入门</string>
+    <string name="main_train_lin_wheat_3">俯卧撑训练入门</string>
+    <string name="main_train_lin_wheat_4">深蹲训练入门</string>
+    <string name="main_train_lin_wheat_5">办公室肩颈放松</string>
+    <string name="main_title_train2">我的课程表</string>
+    <string name="main_train_btn_txt">定制课程表</string>
+    <!---->
+
+</resources>

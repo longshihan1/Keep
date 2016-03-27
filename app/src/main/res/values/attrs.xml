@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- loading -->
+    <declare-styleable name="CustomerProgressBar">
+        <attr name="firstColor" format="color"></attr>
+        <attr name="secondColor" format="color"></attr>
+        <attr name="circleWidth" format="dimension"></attr>
+        <attr name="speed" format="integer"></attr>
+    </declare-styleable>
+    <declare-styleable name="RoundedImageView">
+        <attr name="corner_radius" format="dimension" />
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+        <attr name="round_background" format="boolean" />
+        <attr name="android:scaleType" />
+        <attr name="pressdown_shade" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="JazzyViewPager">
+        <attr name="style">
+            <enum name="standard" value="0" />
+            <enum name="tablet" value="1" />
+            <enum name="cubein" value="2" />
+            <enum name="cubeout" value="3" />
+            <enum name="flipvertical" value="4" />
+            <enum name="fliphorizontal" value="5" />
+            <enum name="stack" value="6" />
+            <enum name="zoomin" value="7" />
+            <enum name="zoomout" value="8" />
+            <enum name="rotateup" value="9" />
+            <enum name="rotatedown" value="10" />
+            <enum name="accordion" value="11" />
+        </attr>
+        <attr name="fadeEnabled" format="boolean" />
+        <attr name="outlineEnabled" format="boolean" />
+        <attr name="outlineColor" format="color|reference" />
+    </declare-styleable>
+    <declare-styleable name="tab_jiadian">
+        <attr name="tab_title_text" format="string|reference" />
+        <attr name="tab_title_ico" format="reference" />
+    </declare-styleable>
+    <declare-styleable name="order_status_attr">
+        <attr name="selected_ico" format="reference" />
+        <attr name="unselected_ico" format="reference" />
+        <attr name="selected_load_bg" format="reference|color" />
+        <attr name="unselected_load_bg" format="reference|color" />
+        <attr name="selected_text_color" format="reference|color" />
+        <attr name="unselected_text_color" format="reference|color" />
+        <attr name="text1" format="string|reference" />
+        <attr name="text2" format="string|reference" />
+    </declare-styleable>
+    <declare-styleable name="ProposalTabView">
+        <attr name="tab_title_color_unselected" format="color|reference" />
+        <attr name="tab_title_color_selected" format="color|reference" />
+        <attr name="tab_ico_unselected" format="reference" />
+        <attr name="tab_ico_selected" format="reference" />
+        <attr name="tab_background_unselected" format="color|reference" />
+        <attr name="tab_background_selected" format="color|reference" />
+        <attr name="tab_tell_line_color_unselected" format="color|reference" />
+        <attr name="tab_tell_line_color_selected" format="color|reference" />
+        <attr name="tab_cut_line_color" format="color|reference" />
+        <attr name="tab_cut_line_width" format="dimension" />
+        <attr name="tab_tell_line_height" format="dimension" />
+        <attr name="tab_title" format="reference|string"></attr>
+        <attr name="tab_title_text_size" format="dimension" />
+    </declare-styleable>
+    <style name="alertThrem" parent="@android:style/Widget.PopupWindow">
+        <item name="android:windowFrame">@null</item>
+        <!-- <item name="android:windowNoTitle">true</item> -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- <item name="android:windowIsFloating">true</item> -->
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:popupBackground">@android:color/transparent</item>
+    </style>
+    <declare-styleable name="SwipeLayout">
+        <attr name="drag_edge" format="enum">
+            <enum name="left" value="0" />
+            <enum name="right" value="1" />
+            <enum name="top" value="2" />
+            <enum name="bottom" value="3" />
+        </attr>
+        <attr name="show_mode" format="enum">
+            <enum name="lay_down" value="0" />
+            <enum name="pull_out" value="1" />
+        </attr>
+    </declare-styleable>
+    <attr name="borderRadius" format="dimension" />
+    <attr name="type">
+        <enum name="circle" value="0" />
+        <enum name="round" value="1" />
+    </attr>
+    <declare-styleable name="RoundImageView">
+        <attr name="borderRadius" />
+        <attr name="type" />
+    </declare-styleable>
+    <declare-styleable name="NumberPicker">
+        <attr name="normalTextColor" format="color" />
+        <attr name="normalTextSize" format="dimension" />
+        <attr name="selecredTextColor" format="color" />
+        <attr name="selecredTextSize" format="dimension" />
+        <attr name="unitHight" format="dimension" />
+        <attr name="itemNumber" format="integer" />
+        <attr name="lineColor" format="color" />
+        <attr name="maskHight" format="dimension" />
+        <attr name="noEmpty" format="boolean" />
+        <attr name="isEnable" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="CircleProgressBar">
+        <attr name="cpb_padding" format="dimension" />
+        <attr name="cpb_background_color" format="color|reference" />
+        <attr name="cpb_bar_color" format="color|reference" />
+        <attr name="cpb_bar_color1" format="color|reference" />
+        <attr name="cpb_bar_color2" format="color|reference" />
+        <attr name="cpb_center_color" format="color|reference" />
+        <attr name="cpb_bar_width" format="dimension" />
+        <attr name="cpb_text_color" format="color|reference" />
+        <attr name="cpb_text_size" format="dimension" />
+        <attr name="cpb_duration" format="integer" />
+        <attr name="cpb_delay" format="integer" />
+        <attr name="cpb_is_animate" format="boolean" />
+        <attr name="cpb_text_format" format="string|reference" />
+        <attr name="cpb_text1" format="string|reference" />
+        <attr name="cpb_text2" format="string|reference" />
+        <attr name="cpb_text_color1" format="color|reference" />
+        <attr name="cpb_text_color2" format="color|reference" />
+        <attr name="cpb_text_size1" format="dimension" />
+        <attr name="cpb_text_size2" format="dimension" />
+        <attr name="cpb_progress" format="float" />
+        <attr name="cpb_progress1" format="float" />
+        <attr name="cpb_progress2" format="float" />
+    </declare-styleable>
+    <declare-styleable name="CircularProgressView">
+        <attr name="borderWidth" format="dimension" />
+        <attr name="colorSequence" format="reference" />
+        <attr name="sweepAnimationDurationMillis" format="integer" />
+        <attr name="angleAnimationDurationMillis" format="integer" />
+        <attr name="minSweepAngle" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="PagerSlidingTabStrip">
+        <attr name="pstsIndicatorColor" format="color" />
+        <attr name="pstsUnderlineColor" format="color" />
+        <attr name="pstsDividerColor" format="color" />
+        <attr name="pstsIndicatorHeight" format="dimension" />
+        <attr name="pstsUnderlineHeight" format="dimension" />
+        <attr name="pstsDividerPadding" format="dimension" />
+        <attr name="pstsTabPaddingLeftRight" format="dimension" />
+        <attr name="pstsScrollOffset" format="dimension" />
+        <attr name="pstsTabBackground" format="reference" />
+        <attr name="pstsShouldExpand" format="boolean" />
+        <attr name="pstsTextAllCaps" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="CardView">
+        <!-- Background color for CardView. -->
+        <attr name="cardBackgroundColor" format="color" />
+        <!-- Corner radius for CardView. -->
+        <attr name="cardCornerRadius" format="dimension" />
+        <!-- Elevation for CardView. -->
+        <attr name="cardElevation" format="dimension" />
+        <!-- Maximum Elevation for CardView. -->
+        <attr name="cardMaxElevation" format="dimension" />
+        <!-- Add padding in API v21+ as well to have the same measurements with previous versions. -->
+        <attr name="cardUseCompatPadding" format="boolean" />
+        <!-- Add padding to CardView on v20 and before to prevent intersections between the Card content and rounded corners. -->
+        <attr name="cardPreventCornerOverlap" format="boolean" />
+        <!-- Inner padding between the edges of the Card and children of the CardView. -->
+        <attr name="contentPadding" format="dimension" />
+        <!-- Inner padding between the left edge of the Card and children of the CardView. -->
+        <attr name="contentPaddingLeft" format="dimension" />
+        <!-- Inner padding between the right edge of the Card and children of the CardView. -->
+        <attr name="contentPaddingRight" format="dimension" />
+        <!-- Inner padding between the top edge of the Card and children of the CardView. -->
+        <attr name="contentPaddingTop" format="dimension" />
+        <!-- Inner padding between the bottom edge of the Card and children of the CardView. -->
+        <attr name="contentPaddingBottom" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="TopBar">
+        <attr name="mtitle" format="string" />
+        <attr name="titleTextSize" format="dimension" />
+        <attr name="mtitleTextColor" format="color" />
+        <attr name="leftBackground" format="string" />
+        <attr name="rightBackground" format="string" />
+    </declare-styleable>
+    <declare-styleable name="main_linear">
+        <!--文字-->
+        <attr name="main_txt" format="string" />
+        <attr name="k1_txt" format="string" />
+        <attr name="tools_txt" format="string" />
+        <attr name="num_txt" format="string" />
+        <attr name="Place_txt" format="string" />
+        <attr name="people_txt" format="string" />
+        <attr name="yicanjia" format="string" />
+        <!--字体大小-->
+        <attr name="lin1_size" format="dimension" />
+        <attr name="lin2_size" format="dimension" />
+        <attr name="lin3_size" format="dimension" />
+        <attr name="lin4_size" format="dimension" />
+        <!--字体颜色-->
+        <attr name="main_TextColor" format="color" />
+        <!--背景-->
+       <!-- <attr name="main_Background" format="string" />-->
+    </declare-styleable>
+
+</resources>
