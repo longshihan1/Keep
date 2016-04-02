@@ -8,18 +8,68 @@
     tools:context="com.news.keep.fragment.TrainFragment">
 
 
-    <com.news.keep.view.TopBar
-        android:id="@+id/train_topBar"
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@color/train_titlt_background"
-        custom:leftBackground="@mipmap/train_data_grandtotal_label"
-        custom:mtitle="Train"
-        custom:mtitleTextColor="@color/wheat"
-        custom:rightBackground="@mipmap/add_train_on"
-        custom:titleTextSize="10dp">
+        android:orientation="horizontal">
 
-    </com.news.keep.view.TopBar>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/notification_subtext_size"
+            android:text="已训练"
+            android:textColor="@color/wheat"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/train_zaixian_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="@color/wheat"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="分钟"
+            android:textColor="@color/wheat" />
+
+
+        <TextView
+            android:id="@+id/train_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="50dp"
+            android:text="上海"
+            android:textColor="@color/wheat"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/train_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:background="@mipmap/add_location_on" />
+
+        <ImageView
+            android:id="@+id/train_plan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginLeft="@dimen/dimen_60"
+            android:background="@mipmap/train_data_continuous_label" />
+
+        <ImageView
+            android:id="@+id/train_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:background="@mipmap/add_train_on" />
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -29,6 +79,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/train_viewpage_three"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/dimen_150">
+
+            </android.support.v4.view.ViewPager>
+
+            <LinearLayout
+                android:id="@+id/train_viewpage_three_round"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/dimen_20"
+                android:layout_marginLeft="@dimen/dimen_165"
+                android:layout_marginRight="@dimen/dimen_150"
+                android:orientation="horizontal">
+
+            </LinearLayout>
+
 
             <TextView
                 style="@style/train_main_view"
@@ -288,12 +356,13 @@
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="50dp">
+                android:layout_height="100dp">
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dimen_100"
                     android:text="@string/main_train_btn_txt" />
 
             </LinearLayout>

@@ -1,6 +1,7 @@
 package com.news.keep.utils;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import java.util.List;
  */
 public class ToolBarUtils {
     private List<TextView> mTextViews = new ArrayList<TextView>();
+    private List<ImageView> imageViews=new ArrayList<ImageView>();
 
     public void createToolBar(LinearLayout container, String[] toolBarTitleArr, int[] iconArr) {
 
@@ -52,8 +54,10 @@ public class ToolBarUtils {
     public void changeColor(int position) {
         //还原所有的颜色
         for (TextView tv : mTextViews) {
-            tv.setSelected(false);
+            tv.setSelected(true);
+
         }
+
 
         mTextViews.get(position).setSelected(true);//通过设置selected属性,控制为选中效果
     }

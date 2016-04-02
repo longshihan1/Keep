@@ -6,5 +6,7 @@ public class Constans {
     public static String Mob_SMS_ID="10b607515d08e";
     public static String MOb_SMS_SCRECT="63e17d49b30c5a71952fc4186659b8e8";
 
+    public static String BASE_URL="www.baidu.com";
+
 
 }

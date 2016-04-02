@@ -4,11 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +24,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.news.keep.R;
-import com.news.keep.dao.User;
+import com.news.keep.dao.People;
+import com.news.keep.utils.Constans;
+import com.news.keep.utils.SharePreferenceUtils;
 import com.news.keep.utils.TLUtil;
 import com.news.keep.view.PickerView;
 import com.news.keep.view.PlayMoreDiaolog;
@@ -38,6 +44,7 @@ import java.util.regex.Pattern;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import cn.bmob.v3.Bmob;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UploadFileListener;
@@ -114,23 +121,39 @@ public class Register1Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.login_person);
         ButterKnife.inject(this);
+        // 初始化 Bmob SDK
+        Bmob.initialize(getApplicationContext(), Constans.Bmob_APPID);
         context = this;
         is_takephoto = false;
 
         Intent intent = getIntent();
         phone = intent.getStringExtra("phone");
+        Log.e(TAG, phone);
 
         initView();
         initData();
         initListener();
+
+
     }
 
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            int what = msg.what;
+            if (what == 1) {
+                Log.e(TAG, "跳转");
+                Intent intent = new Intent(Register1Activity.this, MainActivity.class);
+                startActivity(intent);
+            }
+
+        }
+    };
 
     private void initView() {
-
-
         height = new ArrayList<String>();
         weight = new ArrayList<String>();
         age = new ArrayList<String>();
@@ -226,6 +249,7 @@ public class Register1Activity extends AppCompatActivity {
         });
 
         nick_name = registerNickEdt.getText().toString();
+        //注册事件
         registerTopBar.setTopBarClickListener(new TopBarClickListener() {
             @Override
             public void rightBtnClick() {
@@ -237,7 +261,7 @@ public class Register1Activity extends AppCompatActivity {
                         .setPositiveButton("是", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                User user = new User();
+                                final People user = new People();
                                 //注意：不能调用user.setObjectId("")方法
                                 user.setUsername(nick_name);
                                 user.setMobilePhoneNumber(phone);
@@ -245,13 +269,28 @@ public class Register1Activity extends AppCompatActivity {
                                 user.setGender(sex_pv);
                                 user.setHeight(hight_pv);
                                 user.setWeight(weight_pv);
-                                user.setPassword(password_re);
-
+                                user.setPassword(password);
+                                user.setImg(user_img);
                                 user.save(context, new SaveListener() {
 
                                     @Override
                                     public void onSuccess() {
-                                        //  toast("添加数据成功，返回objectId为："+gameScore.getObjectId() + ”,数据在服务端的创建时间为：“ + gameScore.getCreatedAt());
+                                        Message msg = Message.obtain();
+                                        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+                                        SharePreferenceUtils.saveUserInformation(user);
+                                        SharePreferenceUtils.saveSharePerfence("objectId", user.getObjectId());//id
+                                        msg.what = 1;
+                                        handler.sendMessage(msg);
+       /*                                 SharePreferenceUtils.saveSharePerfence("user_nickname", nick_name);//昵称
+                                        SharePreferenceUtils.saveSharePerfence("user_id", user.getObjectId());//id
+                                        SharePreferenceUtils.saveSharePerfence("user_age", user.getAge());//年龄
+                                        SharePreferenceUtils.saveSharePerfence("user_sex", user.getGender());//性别
+                                        SharePreferenceUtils.saveSharePerfence("user_email", user.getEmail());//email
+                                        SharePreferenceUtils.saveSharePerfence("user_height", user.getHeight());//身高
+                                        SharePreferenceUtils.saveSharePerfence("user_password", user.getPassword());//密码
+                                        SharePreferenceUtils.saveSharePerfence("user_img", user.getImg());//头像
+                                        SharePreferenceUtils.saveSharePerfence("user_weight", user.getWeight());//体重
+                                        SharePreferenceUtils.saveSharePerfence("user_phone", user.getMobilePhoneNumber());//手机号码*/
                                     }
 
                                     @Override
@@ -420,7 +459,7 @@ public class Register1Activity extends AppCompatActivity {
                     startPhotoZoom(data.getData());
                 }
                 break;
-//		拿到了图片结果
+            //拿到了图片结果
             case PHOTORESOULT:
                 if (resultCode == Activity.RESULT_OK) {
 
@@ -440,20 +479,16 @@ public class Register1Activity extends AppCompatActivity {
                             //bmobFile.getUrl()---返回的上传文件的地址（不带域名）
                             //bmobFile.getFileUrl(context)--返回的上传文件的完整地址（带域名）
                             is_takephoto = true;//设置头像
-                            Log.e(TAG, bmobFile.getFileUrl(context));
                             user_img = bmobFile.getFileUrl(context);
                         }
 
                         @Override
                         public void onProgress(Integer value) {
-                            // TODO Auto-generated method stub
                             // 返回的上传进度（百分比）
                         }
 
                         @Override
                         public void onFailure(int code, String msg) {
-                            // TODO Auto-generated method stub
-                            Log.e(TAG, code + ":" + msg);
                             Toast.makeText(Register1Activity.this, "头像上传失败", Toast.LENGTH_SHORT).show();
                         }
                     });

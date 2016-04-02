@@ -8,7 +8,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.news.keep.App;
 import com.news.keep.R;
+import com.news.keep.utils.SharePreferenceUtils;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -52,15 +54,22 @@ public class SpalshActivity extends AppCompatActivity implements Animation.Anima
 
     @Override
     public void onAnimationEnd(Animation animation) {
-        if (true) {
+        if (App.instance().getIsNeedWelcomeGuide()) {
+            //Log.e(TAG,"注册");
             //动画结束时结束欢迎页面并跳转到主页面
             Intent intent = new Intent(this, Splash1Activity.class);
             startActivity(intent);
             this.finish();
         } else {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            this.finish();
+            if (SharePreferenceUtils.getString("objectId") == null) {
+                Intent intent = new Intent(this, Splash1Activity.class);
+                startActivity(intent);
+                this.finish();
+            } else {
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                this.finish();
+            }
         }
     }
 

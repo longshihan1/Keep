@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Train</string>
+    <string name="app_1">健身</string>
+    <string name="app_2">发现</string>
+    <string name="app_3">关注</string>
+    <string name="app_4">我</string>
     <!--splash1-->
     <string name="splash_title1">您的私人锻炼教练</string>
     <string name="register">注册</string>
@@ -34,6 +38,25 @@
     <string name="main_train_lin_wheat_5">办公室肩颈放松</string>
     <string name="main_title_train2">我的课程表</string>
     <string name="main_train_btn_txt">定制课程表</string>
-    <!---->
 
+    <string name="train_main_view_1">训练数据</string>
+    <string name="train_main_view_2">连续训练</string>
+    <string name="train_main_view_3">我的勋章</string>
+    <string name="train_main_view_1_1">打开/天</string>
+    <string name="train_main_view_1_2">燃脂/千卡</string>
+    <string name="train_main_view_1_3">活力/点</string>
+    <string name="train_main_view_2_1">天</string>
+    <string name="train_main_view_2_2">最长连续打卡</string>
+    <string name="train_main_view_3_1">我的勋章</string>
+    <string name="train_main_view_3_2">还没有解锁勋章，赶紧开始锻炼吧</string>
+    <!---->
+    <!--Find_fragment-->
+
+    <string name="jingdong_pull_label">下拉可以刷新</string>
+    <string name="jingdong_refreshing_label">正在加载中</string>
+    <string name="jingdong_release_label">松开后刷新</string>
+    <string name="tmall_pull_label">下拉刷新</string>
+    <string name="tmall_refreshing_label">正在刷新...</string>
+    <string name="tmall_release_label">松开立即刷新</string>
+    <!---->
 </resources>

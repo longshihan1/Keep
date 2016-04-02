@@ -1,17 +1,24 @@
 package com.news.keep.utils;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.news.keep.dao.People;
+import com.news.keep.dao.User;
+
+import java.util.Set;
+
 /**
  * SharePreference工具类 使用之前应先inital 将inital放到application中， 程序中直接使用即可
  *
  * @author
  */
 public class SharePreferenceUtils {
-
-  /*  public static final int DEFAULT_VALUE = 1001;
-    public static final String USER_INFO_KEY = "userinfo";
+    public static final int DEFAULT_VALUE = 1001;
+    public static final String USER_INFO_KEY = "user";
     private static SharePreferenceUtils sharePreferenceUtils;
     private SharedPreferences mSharedPreferences;
-
     private SharePreferenceUtils() {
     }
 
@@ -29,38 +36,38 @@ public class SharePreferenceUtils {
     }
 
     public static void putString(String key, String value) {
-        Editor editor = sharePreferenceUtils.mSharedPreferences.edit();
+        SharedPreferences.Editor editor = sharePreferenceUtils.mSharedPreferences.edit();
         editor.putString(key, value);
         editor.commit();
     }
 
     public static void putInt(String key, int value) {
-        Editor editor = sharePreferenceUtils.mSharedPreferences.edit();
+        SharedPreferences.Editor editor = sharePreferenceUtils.mSharedPreferences.edit();
         editor.putInt(key, value);
         editor.commit();
     }
 
     public static void putFloat(String key, float value) {
-        Editor editor = sharePreferenceUtils.mSharedPreferences.edit();
+        SharedPreferences.Editor editor = sharePreferenceUtils.mSharedPreferences.edit();
         editor.putFloat(key, value);
         editor.commit();
     }
 
     public static void putBoolean(String key, boolean value) {
-        Editor editor = sharePreferenceUtils.mSharedPreferences.edit();
+        SharedPreferences.Editor editor = sharePreferenceUtils.mSharedPreferences.edit();
         editor.putBoolean(key, value);
         editor.commit();
     }
 
     public static void putLong(String key, long value) {
-        Editor editor = sharePreferenceUtils.mSharedPreferences.edit();
+        SharedPreferences.Editor editor = sharePreferenceUtils.mSharedPreferences.edit();
         editor.putLong(key, value);
         editor.commit();
     }
 
     @SuppressLint("NewApi")
     public static void putStringSet(String key, Set value) {
-        Editor editor = sharePreferenceUtils.mSharedPreferences.edit();
+        SharedPreferences.Editor editor = sharePreferenceUtils.mSharedPreferences.edit();
         editor.putStringSet(key, value);
         editor.commit();
     }
@@ -69,7 +76,7 @@ public class SharePreferenceUtils {
         if (value == null) {
             return;
         }
-        Editor editor = sharePreferenceUtils.mSharedPreferences.edit();
+        SharedPreferences.Editor editor = sharePreferenceUtils.mSharedPreferences.edit();
         editor.putString(key, JsonUtil.objetcToJson(value));
         editor.commit();
     }
@@ -108,7 +115,7 @@ public class SharePreferenceUtils {
     }
 
     public static void remove(String key) {
-        Editor editor = sharePreferenceUtils.mSharedPreferences.edit();
+        SharedPreferences.Editor editor = sharePreferenceUtils.mSharedPreferences.edit();
         editor.remove(key);
         editor.commit();
     }
@@ -137,12 +144,14 @@ public class SharePreferenceUtils {
     }
 
     // example 存值
-    public static void saveUserInformation(User user) {
+    public static void saveUserInformation(People user) {
         putObject(USER_INFO_KEY, user);
     }
 
     // example 取值
-    public static UserInfo getUserInfo() {
-        return getObject(USER_INFO_KEY, UserInfo.class);
-    }*/
+    public static User getUserInfo() {
+        return getObject(USER_INFO_KEY, User.class);
+    }
+
+
 }

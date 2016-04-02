@@ -19,8 +19,8 @@ import cn.bmob.v3.BmobObject;
 public class User extends BmobObject {
     private static final long serialVersionUID = 1L;
 
-    private String objectId;
 
+    private String objectId;
     private String username;//昵称
     private String age;//年龄
     private String gender;//性别
@@ -31,7 +31,6 @@ public class User extends BmobObject {
     private String weight;//体重
     private String height;//身高
     private String password;//密码
-
 
     @Override
     public String getObjectId() {

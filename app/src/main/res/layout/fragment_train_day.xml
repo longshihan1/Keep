@@ -1,0 +1,66 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.news.keep.fragment.Train_dayFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/train_day_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/train_main_view_2"
+            android:textSize="13dp" />
+
+        <TextView
+            android:id="@+id/train_day_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/train_day_textView"
+            android:layout_centerHorizontal="true"
+            android:text="0"
+            android:textSize="@dimen/dimen_50" />
+
+        <TextView
+            android:id="@+id/train_day_txt2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/train_day_day"
+            android:layout_alignBottom="@+id/train_day_day"
+            android:layout_toEndOf="@+id/train_day_day"
+            android:text="@string/train_main_view_2_1" />
+
+        <TextView
+            android:id="@+id/train_day_txt3"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/dimen_15"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/train_day_day"
+            android:layout_below="@+id/train_day_txt2"
+            android:text="@string/train_main_view_2_2" />
+
+        <TextView
+            android:id="@+id/train_day_day2"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/dimen_15"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/train_day_txt2"
+            android:layout_below="@+id/train_day_txt2"
+            android:layout_marginLeft="@dimen/dimen_3"
+            android:text="0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_3"
+            android:text="@string/train_main_view_2_1"
+            android:layout_alignTop="@+id/train_day_day2"
+            android:layout_toEndOf="@+id/train_day_txt2" />
+    </RelativeLayout>
+
+</FrameLayout>
