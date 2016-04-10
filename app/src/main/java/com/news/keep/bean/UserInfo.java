@@ -1,4 +1,4 @@
-package com.news.keep.dao;
+package com.news.keep.bean;
 
 import java.io.Serializable;
 

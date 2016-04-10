@@ -10,6 +10,7 @@
     <integer name="circular_default_sweepAnimationDuration">500</integer>
     <integer name="circular_default_angleAnimationDurationMillis">1200</integer>
     <integer name="circular_default_miniSweepAngle">30</integer>
+    <integer name="item_text_area">3</integer>
     <dimen name="circular_default_border_width">4dp</dimen>
     <dimen name="dimen_3">3dp</dimen>
     <dimen name="dimen_5">5dp</dimen>

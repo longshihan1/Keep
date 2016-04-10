@@ -25,9 +25,11 @@
     <string name="main_train_text_leara_lin3_2">全身</string>
     <string name="main_train_text_leara_lin2_1">K1 零基础</string>
     <string name="main_train_text_leara_lin1">零基础适应性训练</string>
-    <string name="main_train_text_leara_lin3_1">8 节</string>
+    <string name="main_train_text_leara_lin3_1">8</string>
+    <string name="main_train_text_leara_lin3_3">天</string>
+    <string name="main_train_text_leara_lin3_3_1">分钟</string>
     <string name="main_train_text_leara_lin2_2">无器械</string>
-    <string name="main_train_text_leara1_lin4">已参加</string>
+    <string name="main_train_text_leara1_lin4">人已参加</string>
     <string name="main_train_text_leara1_lin1">五维腹肌训练计划</string>
     <string name="main_train_text_leara2_lin1">HIIT适应性训练</string>
     <string name="main_title_train1">单次训练</string>
@@ -59,4 +61,11 @@
     <string name="tmall_refreshing_label">正在刷新...</string>
     <string name="tmall_release_label">松开立即刷新</string>
     <!---->
+    <!--item_display-->
+    <string name="item_display_lin2_1">功效：</string>
+    <string name="item_display_lin2_3">器材：</string>
+    <string name="item_display_lin2_5">部位：</string>
+    <string name="item_display_add">参与训练</string>
+    <string name="item_display_peo">小伙伴也在练</string>
+    <string name="item_people_type">适用人群：男女通用</string>
 </resources>

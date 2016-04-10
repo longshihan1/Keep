@@ -10,10 +10,10 @@ import android.widget.ImageView;
 
 import com.news.keep.App;
 import com.news.keep.R;
-import com.news.keep.utils.SharePreferenceUtils;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import cn.bmob.v3.BmobUser;
 
 public class SpalshActivity extends AppCompatActivity implements Animation.AnimationListener {
     public final static String PROMPT_DIALOG_TAG = "PROMPT_DIALOG_TAG";
@@ -61,7 +61,8 @@ public class SpalshActivity extends AppCompatActivity implements Animation.Anima
             startActivity(intent);
             this.finish();
         } else {
-            if (SharePreferenceUtils.getString("objectId") == null) {
+            BmobUser bmobUser = BmobUser.getCurrentUser(getApplicationContext());
+            if ( bmobUser== null) {
                 Intent intent = new Intent(this, Splash1Activity.class);
                 startActivity(intent);
                 this.finish();

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp">
+
+    <TextView
+        android:id="@+id/train_main_txt1_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_15"
+        android:text="@string/main_train_text_leara1_lin1"
+        android:textSize="@dimen/dimen_25"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/train_main_text2_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/train_main_txt1_1"
+        android:layout_below="@+id/train_main_txt1_1"
+        android:text="@string/main_train_text_leara_lin2_1" />
+
+    <com.news.keep.view.StarLinearLayout
+        android:id="@+id/train_main_text2_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/train_main_txt1_1"
+        android:layout_toRightOf="@+id/train_main_text2_1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/train_main_txt1_1"
+        android:layout_toRightOf="@id/train_main_text2_2"
+        android:text="@string/main_train_text_leara_lin2_2" />
+
+    <TextView
+        android:id="@+id/train_main_txt3_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/train_main_txt1_1"
+        android:layout_below="@id/train_main_text2_1"
+        android:text="@string/main_train_text_leara_lin3_1" />
+    <TextView
+        android:id="@+id/train_main_txt3_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/train_main_text2_1"
+        android:layout_toRightOf="@id/train_main_txt3_1"
+        android:text="@string/main_train_text_leara_lin3_3_1" />
+    <TextView
+        android:id="@+id/train_main_txt3_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/train_main_text2_1"
+        android:layout_toRightOf="@id/train_main_txt3_2"
+        android:text="@string/main_train_text_leara_lin3_2" />
+    <TextView
+        android:id="@+id/train_main_text4_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3232323232"
+        android:layout_alignTop="@+id/train_main_text4_2"
+        android:layout_toStartOf="@+id/train_main_text4_2"
+        />
+    <TextView
+        android:id="@+id/train_main_text4_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/main_train_text_leara1_lin4"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/dimen_15"/>
+
+</RelativeLayout>

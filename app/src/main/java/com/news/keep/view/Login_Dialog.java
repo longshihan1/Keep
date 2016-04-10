@@ -1,7 +1,10 @@
 package com.news.keep.view;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
@@ -15,7 +18,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.news.keep.R;
+import com.news.keep.activity.MainActivity;
 import com.news.keep.activity.Splash1Activity;
+import com.news.keep.bean.People;
 import com.news.keep.utils.TLUtil;
 
 import butterknife.ButterKnife;
@@ -24,8 +29,9 @@ import butterknife.OnClick;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.SaveListener;
 
-public class Login_Dialog extends DialogFragment{
+public class Login_Dialog extends DialogFragment {
 
+    private static final String TAG = "Login_Dialog";
     @InjectView(R.id.login_edit_username)
     EditText loginEditUsername;
     @InjectView(R.id.login_edit_psd)
@@ -48,7 +54,6 @@ public class Login_Dialog extends DialogFragment{
     private boolean isPage;
     private boolean isClick;
     private boolean isLogin;
-
 
 
     public static Login_Dialog newInstance() {
@@ -94,6 +99,18 @@ public class Login_Dialog extends DialogFragment{
         ButterKnife.reset(this);
     }
 
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            int what = msg.what;
+            if (what == 1) {
+                Log.e(TAG, "跳转");
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+            }
+
+        }
+    };
 
     private void login() {
         String username1 = loginEditUsername.getText().toString();
@@ -103,8 +120,12 @@ public class Login_Dialog extends DialogFragment{
         bu2.setPassword(password1);
         bu2.login(getActivity(), new SaveListener() {
 
+
             @Override
             public void onSuccess() {
+
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
                 TLUtil.showToast(getActivity(), bu2.getUsername() + "登陆成功");
                 testGetCurrentUser();
             }
@@ -119,7 +140,7 @@ public class Login_Dialog extends DialogFragment{
     }
 
     private void testGetCurrentUser() {
-//		MyUser myUser = BmobUser.getCurrentUser(this, MyUser.class);
+        People myUser = BmobUser.getCurrentUser(getContext(), People.class);
 //		if (myUser != null) {
 //			Log.i("life","本地用户信息:objectId = " + myUser.getObjectId() + ",name = " + myUser.getUsername()
 //					+ ",age = "+ myUser.getAge());
@@ -134,9 +155,8 @@ public class Login_Dialog extends DialogFragment{
         String sessionToken = (String) BmobUser.getObjectByKey(getActivity(), "sessionToken");
         Integer age = (Integer) BmobUser.getObjectByKey(getActivity(), "age");
         Boolean gender = (Boolean) BmobUser.getObjectByKey(getActivity(), "gender");
-        Log.i("bmob", "" + username + ",\n" + mobilePhoneNumber + ",\n" + objectId + ",\n" + createdAt + ",\n" + sessionToken + ",\n" + age + ",\n" + gender);
+        Log.i("bmob", "" + ">>>" + myUser.getUsername() + username + ",\n" + mobilePhoneNumber + ",\n" + objectId + ",\n" + createdAt + ",\n" + sessionToken + ",\n" + age + ",\n" + gender);
     }
-
 
 
     @OnClick(R.id.login_btn_login)

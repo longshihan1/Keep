@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     }
 
     private void initdata() {
-        int id =1;
+        int id = 1;
 
         showPreviousPage(id);
 
@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         // TODO Auto-generated method stub
         super.onDestroy();
     }
+
     /**
      * 显示上次退出时的页面
      *
@@ -162,6 +163,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         }
         ShowFragmen(id);
     }
+
     /**
      * 显示Fragment页面
      *
@@ -172,5 +174,6 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         Fragment fragment = FragmentFactory.getInstanceByIndex(id);
         transaction.replace(R.id.cgt_fl_content, fragment);
         transaction.commit();
+
     }
 }

@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.bmob.BmobConfiguration;
 import com.bmob.BmobPro;
 import com.news.keep.utils.Constans;
@@ -33,6 +35,7 @@ public class App extends Application {
     public static Context applicationContext;
     private  static App application;
     private static final String WELCOME_GUIDE = "welcome_guide";
+    public static RequestQueue queues;
     @Override
     public void onCreate() {
         // TODO Auto-generated method stub
@@ -40,6 +43,7 @@ public class App extends Application {
         initConfig(getApplicationContext());
         _instance = this;
         applicationContext=this;
+        queues= Volley.newRequestQueue(getApplicationContext());
 
         // 初始化 Bmob SDK
         Bmob.initialize(getApplicationContext(), Constans.Bmob_APPID);
@@ -124,4 +128,9 @@ public class App extends Application {
         }
         return processName;
     }
+    //全局的请求队列
+    public static RequestQueue getHttpQueues(){
+        return queues;
+    }
+
 }

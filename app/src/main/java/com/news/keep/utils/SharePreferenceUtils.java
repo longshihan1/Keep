@@ -4,8 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.news.keep.dao.People;
-import com.news.keep.dao.User;
+import com.news.keep.bean.People;
 
 import java.util.Set;
 
@@ -149,9 +148,9 @@ public class SharePreferenceUtils {
     }
 
     // example 取值
-    public static User getUserInfo() {
+  /*  public static User getUserInfo() {
         return getObject(USER_INFO_KEY, User.class);
-    }
+    }*/
 
 
 }

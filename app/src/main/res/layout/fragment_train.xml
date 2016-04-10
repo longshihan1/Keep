@@ -72,6 +72,7 @@
     </LinearLayout>
 
     <ScrollView
+        android:id="@+id/train_main_scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -103,8 +104,14 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/main_title_train" />
+            <ListView
+                android:id="@+id/train_main_lv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-            <com.news.keep.view.Trans_main_rela
+            </ListView>
+
+        <!--    <com.news.keep.view.Trans_main_rela
                 android:id="@+id/main_layout_lin1"
                 android:layout_width="fill_parent"
                 android:layout_height="150dp"
@@ -122,11 +129,7 @@
                 rea:tools_txt="@string/main_train_text_leara_lin2_2"
                 rea:yicanjia="@string/main_train_text_leara1_lin4">
 
-                <com.news.keep.view.StarLinearLayout
-                    android:id="@+id/train_real1_first1_ratingbar_lin1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="105dp" />
+
             </com.news.keep.view.Trans_main_rela>
 
             <View
@@ -151,221 +154,23 @@
                 rea:tools_txt="@string/main_train_text_leara_lin2_2"
                 rea:yicanjia="@string/main_train_text_leara1_lin4">
 
-                <com.news.keep.view.StarLinearLayout
-                    android:id="@+id/train_real1_first1_ratingbar_lin2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="105dp" />
-            </com.news.keep.view.Trans_main_rela>
 
+            </com.news.keep.view.Trans_main_rela>
+-->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/main_train_view" />
 
-            <com.news.keep.view.Trans_main_rela
-                android:id="@+id/main_layout_lin3"
+            <Button
+                android:id="@+id/train_add_lesson"
                 android:layout_width="fill_parent"
-                android:layout_height="130dp"
-                android:background="@color/black"
-                rea:Place_txt="@string/main_train_text_leara_lin3_2"
-                rea:k1_txt="@string/main_train_text_leara_lin2_1"
-                rea:lin1_size="10dp"
-                rea:lin2_size="7dp"
-                rea:lin3_size="5dp"
-                rea:lin4_size="5dp"
-                rea:main_TextColor="@color/wheat"
-                rea:main_txt="@string/main_train_text_leara2_lin1"
-                rea:num_txt="@string/main_train_text_leara_lin3_1"
-                rea:people_txt="3500006"
-                rea:tools_txt="@string/main_train_text_leara_lin2_2"
-                rea:yicanjia="@string/main_train_text_leara1_lin4">
-
-                <com.news.keep.view.StarLinearLayout
-                    android:id="@+id/train_real1_first1_ratingbar_lin3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="105dp" />
-            </com.news.keep.view.Trans_main_rela>
-
-            <TextView
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingBottom="@dimen/main_train_view"
-                android:paddingTop="@dimen/main_train_view"
-                android:text="@string/main_title_train1"
-                android:textSize="15dp"
-
-                />
-
-            <com.news.keep.view.Trans_main_rela
-                android:id="@+id/main_layout_lin4"
-                android:layout_width="fill_parent"
-                android:layout_height="110dp"
-                android:background="@color/wheat"
-                rea:Place_txt="@string/main_train_text_leara_lin3_2"
-                rea:k1_txt="@string/main_train_text_leara_lin2_1"
-                rea:lin1_size="10dp"
-                rea:lin2_size="7dp"
-                rea:lin3_size="5dp"
-                rea:lin4_size="5dp"
-                rea:main_TextColor="@color/black"
-                rea:main_txt="@string/main_train_lin_wheat_1"
-                rea:num_txt="@string/main_train_text_leara_lin3_1"
-                rea:people_txt="3500006"
-                rea:tools_txt="@string/main_train_text_leara_lin2_2"
-                rea:yicanjia="@string/main_train_text_leara1_lin4">
-
-                <com.news.keep.view.StarLinearLayout
-                    android:id="@+id/train_real1_first1_ratingbar_lin4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="70dp" />
-            </com.news.keep.view.Trans_main_rela>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/main_train_view" />
-
-            <com.news.keep.view.Trans_main_rela
-                android:id="@+id/main_layout_lin5"
-                android:layout_width="fill_parent"
-                android:layout_height="110dp"
-                android:background="@color/wheat"
-                rea:Place_txt="@string/main_train_text_leara_lin3_2"
-                rea:k1_txt="@string/main_train_text_leara_lin2_1"
-                rea:lin1_size="10dp"
-                rea:lin2_size="7dp"
-                rea:lin3_size="5dp"
-                rea:lin4_size="5dp"
-                rea:main_TextColor="@color/black"
-                rea:main_txt="@string/main_train_lin_wheat_2"
-                rea:num_txt="@string/main_train_text_leara_lin3_1"
-                rea:people_txt="3500006"
-                rea:tools_txt="@string/main_train_text_leara_lin2_2"
-                rea:yicanjia="@string/main_train_text_leara1_lin4">
-
-                <com.news.keep.view.StarLinearLayout
-                    android:id="@+id/train_real1_first1_ratingbar_lin5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="70dp" />
-            </com.news.keep.view.Trans_main_rela>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/main_train_view" />
-
-            <com.news.keep.view.Trans_main_rela
-                android:id="@+id/main_layout_lin6"
-                android:layout_width="fill_parent"
-                android:layout_height="110dp"
-                android:background="@color/wheat"
-                rea:Place_txt="@string/main_train_text_leara_lin3_2"
-                rea:k1_txt="@string/main_train_text_leara_lin2_1"
-                rea:lin1_size="10dp"
-                rea:lin2_size="7dp"
-                rea:lin3_size="5dp"
-                rea:lin4_size="5dp"
-                rea:main_TextColor="@color/black"
-                rea:main_txt="@string/main_train_lin_wheat_3"
-                rea:num_txt="@string/main_train_text_leara_lin3_1"
-                rea:people_txt="3500006"
-                rea:tools_txt="@string/main_train_text_leara_lin2_2"
-                rea:yicanjia="@string/main_train_text_leara1_lin4">
-
-                <com.news.keep.view.StarLinearLayout
-                    android:id="@+id/train_real1_first1_ratingbar_lin6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="70dp" />
-            </com.news.keep.view.Trans_main_rela>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/main_train_view" />
-
-            <com.news.keep.view.Trans_main_rela
-                android:id="@+id/main_layout_lin7"
-                android:layout_width="fill_parent"
-                android:layout_height="110dp"
-                android:background="@color/wheat"
-                rea:Place_txt="@string/main_train_text_leara_lin3_2"
-                rea:k1_txt="@string/main_train_text_leara_lin2_1"
-                rea:lin1_size="10dp"
-                rea:lin2_size="7dp"
-                rea:lin3_size="5dp"
-                rea:lin4_size="5dp"
-                rea:main_TextColor="@color/black"
-                rea:main_txt="@string/main_train_lin_wheat_4"
-                rea:num_txt="@string/main_train_text_leara_lin3_1"
-                rea:people_txt="3500006"
-                rea:tools_txt="@string/main_train_text_leara_lin2_2"
-                rea:yicanjia="@string/main_train_text_leara1_lin4">
-
-                <com.news.keep.view.StarLinearLayout
-                    android:id="@+id/train_real1_first1_ratingbar_lin7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="70dp" />
-            </com.news.keep.view.Trans_main_rela>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/main_train_view" />
-
-            <com.news.keep.view.Trans_main_rela
-                android:id="@+id/main_layout_lin8"
-                android:layout_width="fill_parent"
-                android:layout_height="110dp"
-                android:background="@color/wheat"
-                rea:Place_txt="@string/main_train_text_leara_lin3_2"
-                rea:k1_txt="@string/main_train_text_leara_lin2_1"
-                rea:lin1_size="10dp"
-                rea:lin2_size="7dp"
-                rea:lin3_size="5dp"
-                rea:lin4_size="5dp"
-                rea:main_TextColor="@color/black"
-                rea:main_txt="@string/main_train_lin_wheat_5"
-                rea:num_txt="@string/main_train_text_leara_lin3_1"
-                rea:people_txt="3500006"
-                rea:tools_txt="@string/main_train_text_leara_lin2_2"
-                rea:yicanjia="@string/main_train_text_leara1_lin4">
-
-                <com.news.keep.view.StarLinearLayout
-                    android:id="@+id/train_real1_first1_ratingbar_lin8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="70dp" />
-            </com.news.keep.view.Trans_main_rela>
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingBottom="@dimen/main_train_view"
-                android:paddingTop="@dimen/main_train_view"
-                android:text="@string/main_title_train2"
-                android:textSize="15dp" />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="100dp">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/dimen_100"
-                    android:text="@string/main_train_btn_txt" />
-
-            </LinearLayout>
+                android:layout_marginBottom="@dimen/dimen_30"
+                android:layout_marginLeft="@dimen/dimen_100"
+                android:layout_marginRight="@dimen/dimen_100"
+                android:layout_marginTop="@dimen/dimen_30"
+                android:text="添加课程" />
         </LinearLayout>
+
     </ScrollView>
 </LinearLayout>

@@ -1,28 +1,30 @@
 package com.news.keep.fragment;
 
-
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.news.keep.R;
+import com.news.keep.activity.Train_add;
+import com.news.keep.adapter.TrainPageAdapter;
+import com.news.keep.bean.People;
+import com.news.keep.bean.Train_Display;
 import com.news.keep.utils.ToolBarUtils;
 import com.news.keep.view.PoritionView;
 import com.news.keep.view.StarLinearLayout;
@@ -34,11 +36,15 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.listener.GetListener;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class TrainFragment extends Fragment {
+    private String TAG="TrainFragment";
     @InjectView(R.id.train_zaixian_time)
     TextView trainZaixianTime;
     @InjectView(R.id.train_city)
@@ -53,19 +59,22 @@ public class TrainFragment extends Fragment {
     ViewPager trainViewpageThree;
     @InjectView(R.id.train_viewpage_three_round)
     LinearLayout trainViewpageThreeRound;
+    @InjectView(R.id.train_main_scroll)
+    ScrollView trainMainScroll;
+    @InjectView(R.id.train_add_lesson)
+    Button trainAddLesson;
+    @InjectView(R.id.train_main_lv)
+    ListView trainMainLv;
     private TopBar topBar;
     private Context context;
     private StarLinearLayout starsLayout;
 
-    //图片截取
-    Bitmap picRes;
-    Bitmap showPic;
-    //获取原图片的宽和高
-    int picWidth;
-    int picHeight;
     private PoritionView poritonView = null;
     // 屏幕的长和宽
     int screenWidth, screenHeight;
+    private List<Train_Display.CategoriesBean> lists;
+    private TrainPageAdapter adapter;
+
 
     private List<Fragment> mFragments = new ArrayList<Fragment>();
     private ToolBarUtils mToolBarUtil;
@@ -73,36 +82,111 @@ public class TrainFragment extends Fragment {
     public int currentpositon = 0;
     public int oldpositon = 0;
 
+    //viewpage的几张图
+    private Train_addFragment train_addFragment;
+    private Train_dataFragment train_dataFragment;
+    private Train_dayFragment train_dayFragment;
+
     public TrainFragment() {
-        // Required empty public constructor
     }
 
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 1) {
+                List<Train_Display.CategoriesBean> list1= (List<Train_Display.CategoriesBean>) msg.obj;
+                adapter.setData(list1);
+                trainMainLv.setAdapter(adapter);
+            }
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_train, container, false);
-
         ButterKnife.inject(this, view);
-        context = getActivity();
         initView();
         initData();
         initListener();
-
-
         return view;
     }
 
     private void initView() {
+        lists = new ArrayList<Train_Display.CategoriesBean>();
+        adapter = new TrainPageAdapter(getActivity(), trainMainLv, lists);
+
+        BmobUser bmobUser = BmobUser.getCurrentUser(getActivity());
+        String user_id = bmobUser.getObjectId();
+        BmobQuery<People> query = new BmobQuery<People>();
+        query.getObject(getActivity(), user_id, new GetListener<People>() {
+
+            @Override
+            public void onSuccess(People people) {
+            /*    synchronized (this) {
+                    List<People.Whois> list = people.getUserJoin();
+                    for (final People.Whois bean : list) {
+                        String id = bean.getU_id();
+                        BmobQuery<Train_Display.CategoriesBean> query = new BmobQuery<Train_Display.CategoriesBean>();
+                        query.getObject(getActivity(), id, new GetListener<Train_Display.CategoriesBean>() {
+                            @Override
+                            public void onSuccess(Train_Display.CategoriesBean bean1) {
+                                Log.e(TAG,bean1.toString()+"");
+                                lists.add(bean1);
+
+                            }
+
+                            @Override
+                            public void onFailure(int code, String arg0) {
+                            }
+                        });
+                    }
+                }
+                Message message = Message.obtain();
+                message.what = 1;
+                message.obj = lists;
+                Log.e(TAG,lists.size()+"");
+                handler.sendMessage(message);*/
+
+            }
+
+            @Override
+            public void onFailure(int code, String arg0) {
+
+            }
+
+        });
+
         // 添加fragment到集合中
-        mFragments.add(new Train_dataFragment());
-        mFragments.add(new Train_dayFragment());
-        mFragments.add(new Train_addFragment());
+        mFragments.add(train_dataFragment);
+        mFragments.add(train_dayFragment);
+        mFragments.add(train_addFragment);
         trainViewpageThree.setAdapter(new MyPagerAdapter(getActivity().getSupportFragmentManager()));
         addPointView();
+
+
     }
 
     private void initData() {
+
+    }
+
+    @OnClick({R.id.train_add_lesson, R.id.train_city, R.id.train_location, R.id.train_plan, R.id.train_add})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.train_add_lesson:
+                Intent intent = new Intent(getActivity(), Train_add.class);
+                startActivity(intent);
+                break;
+            case R.id.train_city:
+                break;
+            case R.id.train_location:
+                break;
+            case R.id.train_plan:
+                break;
+            case R.id.train_add:
+                break;
+        }
     }
 
 
@@ -150,78 +234,26 @@ public class TrainFragment extends Fragment {
             public void onPageScrollStateChanged(int state) {
             }
         });
-   /*     mToolBarUtil.setOnToolBarClickListener(new ToolBarUtils.OnToolBarClickListener() {
-            @Override
-            public void onToolBarClick(int position) {
-                trainViewpageThree.setCurrentItem(position);
-            }
-        });*/
-      /*  StarLayoutParams params = new StarLayoutParams();
-        params.setNormalStar(getResources().getDrawable(R.mipmap.star_normal))
-                .setSelectedStar(getResources().getDrawable(R.mipmap.star_selected))
-                .setSelectable(false)
-                .setSelectedStarNum(1)
-                .setTotalStarNum(5)
-                .setStarHorizontalSpace(5);
-        starsLayout.setStarParams(params);
-        topBar.setTopBarClickListener(new TopBarClickListener() {
-            @Override
-            public void rightBtnClick() {
-                //处理右边按钮所对应的逻辑
-                Toast.makeText(context, "你点击的是右边的按钮", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void leftBtnClick() {
-                //处理左边按钮所对应的逻辑
-                Toast.makeText(context, "你点击的是左边的按钮", Toast.LENGTH_LONG).show();
-            }
-        });*/
-
     }
 
-    /*
-    * 先运行
-    * */
+    /**
+     * 先运行
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //获取网络数据
-        RequestQueue mQueue = Volley.newRequestQueue(getActivity());
-        StringRequest stringRequest = new StringRequest("http://api.gotokeep.com/v1.1/home/recommend",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("TAG", response);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("TAG", error.getMessage(), error);
-            }
-        });
-        mQueue.add(stringRequest);
+        context = getActivity();
 
+        train_addFragment = new Train_addFragment();
+        train_dataFragment = new Train_dataFragment();
+        train_dayFragment = new Train_dayFragment();
     }
+
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
-    }
-
-    @OnClick({R.id.train_city, R.id.train_location, R.id.train_plan, R.id.train_add})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.train_city:
-                break;
-            case R.id.train_location:
-                break;
-            case R.id.train_plan:
-                break;
-            case R.id.train_add:
-                break;
-        }
     }
 
     /**

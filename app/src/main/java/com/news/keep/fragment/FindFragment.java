@@ -70,8 +70,8 @@ public class FindFragment extends Fragment {
      * 初始化View
      */
     private void initViews() {
-        mainActRecyclerview.setHeaderLayout(new TmallHeaderLayout(getActivity()));
-        mainActRecyclerview.setFooterLayout(new TmallFooterLayout(getActivity()));
+        mainActRecyclerview.setHeaderLayout(new TmallHeaderLayout(context));
+        mainActRecyclerview.setFooterLayout(new TmallFooterLayout(context));
 
         initRecyclerView();
     }
@@ -82,7 +82,7 @@ public class FindFragment extends Fragment {
     private void initRecyclerView() {
         mRecyclerView = mainActRecyclerview.getRefreshableView();
 //      mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(context, 2));
 
         mainActRecyclerview.setScrollingWhileRefreshingEnabled(false);
 
