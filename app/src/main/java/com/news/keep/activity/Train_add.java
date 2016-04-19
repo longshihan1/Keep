@@ -111,37 +111,20 @@ public class Train_add extends AppCompatActivity {
          * 然后通过判断event.getAction()是MotionEvent.ACTION_UP还是ACTION_DOWN还是ACTION_MOVE分别作不同行为。
          * setOnClickListener的监控时间只监控到手指ACTION_DOWN时发生的行为
          */
+
         trainAddLv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                if (i == 1) {
                     new FinishRefresh().execute("下拉刷新");
                     adapter.notifyDataSetChanged();
-                } else {
-                    new FinishRefresh().execute("无");
-                    adapter.notifyDataSetChanged();
-                }
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-                if (i == 0) {
                     new FinishRefresh().execute("上拉加载");
                     adapter.notifyDataSetChanged();
-                } else {
-                    new FinishRefresh().execute("无");
-                    adapter.notifyDataSetChanged();
-                }
             }
         });
-
-     /*   trainAddLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
-            }
-        });*/
 
     }
 
@@ -173,11 +156,9 @@ public class Train_add extends AppCompatActivity {
             } catch (InterruptedException e) {
             }
             if (params[0].equals("下拉刷新")) {
-                i--;
                 Net.sendHttp(context, handler, "加载中...", Constans.TRAIN_MAIN_2, "0", "0");
                 return null;
             } else if (params[0].equals("上拉加载")) {
-                i++;
                 Net.sendHttp(context, handler, "加载中...", Constans.TRAIN_MAIN_2, "0", "20");
                 return null;
             } else {
@@ -187,7 +168,6 @@ public class Train_add extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result) {
-//          adapter.notifyDataSetChanged();
             trainAddLv.onRefreshComplete();
         }
     }

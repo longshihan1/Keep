@@ -2,14 +2,13 @@ package com.news.keep.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -119,8 +118,7 @@ public class TrainPageAdapter extends BaseAdapter {
         holder.trainmaintxt31.setText(lesson_count);//训练天数
         holder.trainmaintxt33.setText(bodypart);//部位
         holder.trainmaintext41.setText(trainee_count);//参加人数
-        imageLoader.DisplayImage(icon, holder.trainmainrea);
-        holder.trainmainrea1.setBackground(holder.trainmainrea.getDrawable());
+        imageLoader.DisplayImage(icon, holder.trainmainrea1);
         holder.trainmainrea1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,21 +135,22 @@ public class TrainPageAdapter extends BaseAdapter {
         return convertView;
     }
 
-
-    //采用Handler+Thread+封装外部接口
-    private void loadImage(final String url, final View view) {
-        //如果缓存过就会从缓存中取出图像，ImageCallback接口中方法也不会被执行
-        Drawable cacheImage = asyncImageLoader3.loadDrawable(url, new AsyncImageLoader3.ImageCallback() {
-            //请参见实现：如果第一次加载url时下面方法会执行
-            public void imageLoaded(Drawable imageDrawable) {
-                view.setBackground(imageDrawable);
-            }
-        });
-        if (cacheImage != null) {
-            view.setBackground(cacheImage);
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        if(listView == null) return;
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            return;
         }
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
     }
-
 
     public class ViewHolder {
         public final TextView trainmaintxt11;
@@ -163,7 +162,6 @@ public class TrainPageAdapter extends BaseAdapter {
         public final TextView trainmaintxt33;
         public final TextView trainmaintext41;
         public final TextView trainmaintext42;
-        public final ImageView trainmainrea;
         public final RelativeLayout trainmainrea1;
         public final View root;
 
@@ -177,7 +175,6 @@ public class TrainPageAdapter extends BaseAdapter {
             trainmaintxt33 = (TextView) root.findViewById(R.id.train_main_txt3_3);
             trainmaintext41 = (TextView) root.findViewById(R.id.train_main_text_use);
             trainmaintext42 = (TextView) root.findViewById(R.id.train_main_text4_2);
-            trainmainrea = (ImageView) root.findViewById(R.id.train_main_rea);
             trainmainrea1 = (RelativeLayout) root.findViewById(R.id.train_main_rea1);
             this.root = root;
         }

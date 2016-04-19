@@ -3,19 +3,19 @@ package com.news.keep.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -38,13 +38,14 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.listener.GetListener;
+import cn.bmob.v3.datatype.BmobPointer;
+import cn.bmob.v3.listener.FindListener;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class TrainFragment extends Fragment {
-    private String TAG="TrainFragment";
+    private String TAG = "TrainFragment";
     @InjectView(R.id.train_zaixian_time)
     TextView trainZaixianTime;
     @InjectView(R.id.train_city)
@@ -90,22 +91,15 @@ public class TrainFragment extends Fragment {
     public TrainFragment() {
     }
 
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.what == 1) {
-                List<Train_Display.CategoriesBean> list1= (List<Train_Display.CategoriesBean>) msg.obj;
-                adapter.setData(list1);
-                trainMainLv.setAdapter(adapter);
-            }
-        }
-    };
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_train, container, false);
         ButterKnife.inject(this, view);
+
+        lists = new ArrayList<Train_Display.CategoriesBean>();
+        adapter = new TrainPageAdapter(context, trainMainLv, lists);
+
         initView();
         initData();
         initListener();
@@ -113,48 +107,26 @@ public class TrainFragment extends Fragment {
     }
 
     private void initView() {
-        lists = new ArrayList<Train_Display.CategoriesBean>();
-        adapter = new TrainPageAdapter(getActivity(), trainMainLv, lists);
-
         BmobUser bmobUser = BmobUser.getCurrentUser(getActivity());
         String user_id = bmobUser.getObjectId();
-        BmobQuery<People> query = new BmobQuery<People>();
-        query.getObject(getActivity(), user_id, new GetListener<People>() {
+        BmobQuery<Train_Display.CategoriesBean> query = new BmobQuery<Train_Display.CategoriesBean>();
+        People post = new People();
+        post.setObjectId(user_id);
+        query.addWhereRelatedTo("UserAtt", new BmobPointer(post));
+        query.findObjects(getActivity(), new FindListener<Train_Display.CategoriesBean>() {
 
             @Override
-            public void onSuccess(People people) {
-            /*    synchronized (this) {
-                    List<People.Whois> list = people.getUserJoin();
-                    for (final People.Whois bean : list) {
-                        String id = bean.getU_id();
-                        BmobQuery<Train_Display.CategoriesBean> query = new BmobQuery<Train_Display.CategoriesBean>();
-                        query.getObject(getActivity(), id, new GetListener<Train_Display.CategoriesBean>() {
-                            @Override
-                            public void onSuccess(Train_Display.CategoriesBean bean1) {
-                                Log.e(TAG,bean1.toString()+"");
-                                lists.add(bean1);
-
-                            }
-
-                            @Override
-                            public void onFailure(int code, String arg0) {
-                            }
-                        });
-                    }
-                }
-                Message message = Message.obtain();
-                message.what = 1;
-                message.obj = lists;
-                Log.e(TAG,lists.size()+"");
-                handler.sendMessage(message);*/
-
+            public void onSuccess(List<Train_Display.CategoriesBean> list) {
+                System.out.println(list.size()+"----lllllllllll");
+                adapter.setData(list);
+                trainMainLv.setAdapter(adapter);
+                setListViewHeightBasedOnChildren(trainMainLv);
             }
 
             @Override
-            public void onFailure(int code, String arg0) {
-
+            public void onError(int code, String msg) {
+                Log.i("life", "查询失败：" + code + "-" + msg);
             }
-
         });
 
         // 添加fragment到集合中
@@ -163,8 +135,6 @@ public class TrainFragment extends Fragment {
         mFragments.add(train_addFragment);
         trainViewpageThree.setAdapter(new MyPagerAdapter(getActivity().getSupportFragmentManager()));
         addPointView();
-
-
     }
 
     private void initData() {
@@ -247,6 +217,7 @@ public class TrainFragment extends Fragment {
         train_addFragment = new Train_addFragment();
         train_dataFragment = new Train_dataFragment();
         train_dayFragment = new Train_dayFragment();
+
     }
 
 
@@ -292,4 +263,25 @@ public class TrainFragment extends Fragment {
         }
     }
 
+    public void setListViewHeightBasedOnChildren(ListView listView) {
+        // 获取ListView对应的Adapter
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            return;
+        }
+        int totalHeight = 0;
+        System.out.println(listAdapter.getCount()+"不会有两遍吧");
+        for (int i = 0, len = listAdapter.getCount(); i < len; i++) {
+            // listAdapter.getCount()返回数据项的数目
+            View listItem = listAdapter.getView(i, null, listView);
+            // 计算子项View 的宽高
+            listItem.measure(0, 0);
+            // 统计所有子项的总高度
+            totalHeight +=500;
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight+20;
+        listView.setLayoutParams(params);
+    }
 }

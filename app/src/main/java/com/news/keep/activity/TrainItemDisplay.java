@@ -1,7 +1,7 @@
 package com.news.keep.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.news.keep.R;
 import com.news.keep.bean.People;
 import com.news.keep.bean.Train_Display;
+import com.news.keep.utils.Cache.ImageLoader;
 import com.news.keep.utils.http.AsyncImageLoader3;
 
 import java.util.List;
@@ -81,6 +82,7 @@ public class TrainItemDisplay extends AppCompatActivity {
     private String instruction;//建议
     private String effect_name;//功效
     private String english_name;//英文名
+    private ImageLoader imageLoader;
 
     private AsyncImageLoader3 asyncImageLoader3 = new AsyncImageLoader3();
 
@@ -142,24 +144,6 @@ public class TrainItemDisplay extends AppCompatActivity {
 
                     }
                 });
-
-/*
-                people.add("UserJoin", new People.Whois(msg.obj.toString(), list.getId()));
-                people.update(getApplicationContext(), user_id, new UpdateListener() {
-                    @Override
-                    public void onSuccess() {
-                        itemDisplayAddLesson.setBackgroundResource(R.drawable.add_lesson);
-                        includeJion.setText("已添加");
-                        includeJion.setTextColor(Color.BLACK);
-
-
-                    }
-
-                    @Override
-                    public void onFailure(int i, String s) {
-                        Log.e(TAG, s + ":" + i);
-                    }
-                });*/
             }
         }
     };
@@ -170,6 +154,7 @@ public class TrainItemDisplay extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_train_item_display);
         ButterKnife.inject(this);
+        imageLoader = new ImageLoader(this);
         initData();
         initView();
         initListener();
@@ -180,7 +165,7 @@ public class TrainItemDisplay extends AppCompatActivity {
     }
 
     private void initView() {
-        loadImage(list.getBackground_image(), itemDisplayBackground);//背景
+        imageLoader.DisplayImage(list.getBackground_image(), itemDisplayBackground);//背景
         trainDisplayNickname.setText(list.getName());//名称
         trainDisplayUseLin22.setText(list.getEffect_name());//功效
         trainDisplayUseLin24.setText(list.getEquipment());//器材
@@ -192,27 +177,6 @@ public class TrainItemDisplay extends AppCompatActivity {
         trainDisplayInfo.setText(list.getInstruction());//建议
 
         trainDisplayPeocount.setText(Integer.toString(list.getTrainee_count()));
-     /*   BmobQuery<People> query = new BmobQuery<People>();
-        String[] UserJoin = {list.getId()};
-        query.addWhereContainsAll("UserJoin", Arrays.asList(UserJoin));
-        query.findObjects(this, new FindListener<People>() {
-
-            @Override
-            public void onSuccess(List<People> object) {
-                itemDisplayAddLesson.setBackgroundResource(R.drawable.add_lesson);
-                itemDisplayAddLesson.setClickable(false);
-                includeJion.setText("已添加");
-                includeJion.setTextColor(Color.BLACK);
-            }
-
-            @Override
-            public void onError(int code, String msg) {
-
-            }
-
-        });*/
-
-
     }
 
     private void initListener() {
@@ -226,35 +190,13 @@ public class TrainItemDisplay extends AppCompatActivity {
                 finish();
                 break;
             case R.id.item_display_add_lesson:
-           /*     BmobQuery<Train_Display.CategoriesBean> bmobQuery = new BmobQuery<Train_Display.CategoriesBean>();
-                bmobQuery.addQueryKeys("id");
-                bmobQuery.findObjects(this, new FindListener<Train_Display.CategoriesBean>() {
-                    @Override
-                    public void onSuccess(List<Train_Display.CategoriesBean> list_ca) {
-                        for (int i = 0; i <list_ca.size() ; i++) {
-                            Log.e(TAG,list_ca.get(i).getId()+":"+list.getId()+":"+i);
-                        *//*    if (list_ca.get(i).getId()==list.getId()){
-                                Log.e(TAG, "有");
-                            }else {
-                                Log.e(TAG, "无");
-                            }*//*
-                        }
-                    }
-
-                    @Override
-                    public void onError(int code, String msg) {
-
-                    }
-                });
-*/
-
-               BmobQuery<Train_Display.CategoriesBean> query = new BmobQuery<Train_Display.CategoriesBean>();
+                BmobQuery<Train_Display.CategoriesBean> query = new BmobQuery<Train_Display.CategoriesBean>();
                 query.addWhereEqualTo("id", list.getId());
                 //执行查询方法
                 query.findObjects(getApplicationContext(), new FindListener<Train_Display.CategoriesBean>() {
                     @Override
                     public void onSuccess(List<Train_Display.CategoriesBean> been1) {
-                        Log.e(TAG, "Success"+been1.get(0).getId()+been1.get(0).getName());
+                        Log.e(TAG, "Success" + been1.get(0).getId() + been1.get(0).getName());
                         for (Train_Display.CategoriesBean bean : been1) {
                             //说明有这条信息，不用添加，直接跳入喜欢
                             Message message = Message.obtain();
@@ -309,22 +251,10 @@ public class TrainItemDisplay extends AppCompatActivity {
         }
     }
 
-    //采用Handler+Thread+封装外部接口
-    private void loadImage(final String url, final View view) {
-        //如果缓存过就会从缓存中取出图像，ImageCallback接口中方法也不会被执行
-        Drawable cacheImage = asyncImageLoader3.loadDrawable(url, new AsyncImageLoader3.ImageCallback() {
-            //请参见实现：如果第一次加载url时下面方法会执行
-            public void imageLoaded(Drawable imageDrawable) {
-                view.setBackground(imageDrawable);
-            }
-        });
-        if (cacheImage != null) {
-            view.setBackground(cacheImage);
-        }
-    }
-
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
             finish();
             return true;
         }

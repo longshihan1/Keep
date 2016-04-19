@@ -4,9 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.widget.ImageView;
+import android.view.View;
 
 import com.news.keep.R;
+import com.news.keep.utils.ImageUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,8 +36,8 @@ import java.util.concurrent.Executors;
 public class ImageLoader {
     MemoryCache memoryCache = new MemoryCache();
     FileCache fileCache;
-    private Map<ImageView, String> imageViews = Collections
-            .synchronizedMap(new WeakHashMap<ImageView, String>());
+    private Map<View, String> imageViews = Collections
+            .synchronizedMap(new WeakHashMap<View, String>());
     // 线程池
     ExecutorService executorService;
 
@@ -49,21 +50,21 @@ public class ImageLoader {
     final int stub_id = R.mipmap.add_mip_moren;
 
     // 最主要的方法
-    public void DisplayImage(String url, ImageView imageView) {
+    public void DisplayImage(String url, View imageView) {
         imageViews.put(imageView, url);
         // 先从内存缓存中查找
 
         Bitmap bitmap = memoryCache.get(url);
         if (bitmap != null)
-            imageView.setImageBitmap(bitmap);
+            imageView.setBackground(ImageUtils.bitmapToDrawable(bitmap));
         else {
             // 若没有的话则开启新线程加载图片
             queuePhoto(url, imageView);
-            imageView.setImageResource(stub_id);
+            imageView.setBackgroundResource(stub_id);
         }
     }
 
-    private void queuePhoto(String url, ImageView imageView) {
+    private void queuePhoto(String url, View imageView) {
         PhotoToLoad p = new PhotoToLoad(url, imageView);
         executorService.submit(new PhotosLoader(p));
     }
@@ -75,7 +76,6 @@ public class ImageLoader {
         Bitmap b = decodeFile(f);
         if (b != null)
             return b;
-
         // 最后从指定的url中下载图片
         try {
             Bitmap bitmap = null;
@@ -130,9 +130,9 @@ public class ImageLoader {
     // Task for the queue
     private class PhotoToLoad {
         public String url;
-        public ImageView imageView;
+        public View imageView;
 
-        public PhotoToLoad(String u, ImageView i) {
+        public PhotoToLoad(String u, View i) {
             url = u;
             imageView = i;
         }
@@ -187,9 +187,9 @@ public class ImageLoader {
             if (imageViewReused(photoToLoad))
                 return;
             if (bitmap != null)
-                photoToLoad.imageView.setImageBitmap(bitmap);
+                photoToLoad.imageView.setBackground(ImageUtils.bitmapToDrawable(bitmap));
             else
-                photoToLoad.imageView.setImageResource(stub_id);
+                photoToLoad.imageView.setBackgroundResource(stub_id);
         }
     }
 
@@ -202,7 +202,7 @@ public class ImageLoader {
         final int buffer_size = 1024;
         try {
             byte[] bytes = new byte[buffer_size];
-            for (;;) {
+            for (; ; ) {
                 int count = is.read(bytes, 0, buffer_size);
                 if (count == -1)
                     break;

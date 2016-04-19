@@ -130,7 +130,7 @@
         <attr name="cpb_progress2" format="float" />
     </declare-styleable>
     <declare-styleable name="CircularProgressView">
-        <attr name="borderWidth" format="dimension" />
+        <attr name="borderWidthw" format="dimension" />
         <attr name="colorSequence" format="reference" />
         <attr name="sweepAnimationDurationMillis" format="integer" />
         <attr name="angleAnimationDurationMillis" format="integer" />
@@ -199,5 +199,7 @@
         <!--背景-->
        <!-- <attr name="main_Background" format="string" />-->
     </declare-styleable>
-
+    <declare-styleable name="PowerImageView">
+        <attr name="auto_play" format="boolean"></attr>
+    </declare-styleable>
 </resources>

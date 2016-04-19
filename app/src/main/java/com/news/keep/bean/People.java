@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.datatype.BmobRelation;
 
 /**
@@ -33,6 +34,15 @@ public class People extends BmobUser {
     private List<Whois> UserJoin;//参加的活动
 
     private BmobRelation UserAtt;//关注
+    private BmobPointer eeee;//试一试
+
+    public BmobPointer getEeee() {
+        return eeee;
+    }
+
+    public void setEeee(BmobPointer eeee) {
+        this.eeee = eeee;
+    }
 
     public BmobRelation getUserAtt() {
         return UserAtt;

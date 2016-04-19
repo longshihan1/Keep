@@ -12,6 +12,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 import com.news.keep.R;
 import com.news.keep.bean.People;
 import com.news.keep.utils.Constans;
+import com.news.keep.utils.Design;
 import com.news.keep.utils.TLUtil;
 import com.news.keep.view.PickerView;
 import com.news.keep.view.PlayMoreDiaolog;
@@ -35,8 +37,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -48,6 +48,13 @@ import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
 public class Register1Activity extends AppCompatActivity {
+    @InjectView(R.id.register_nick_edt_txt)
+    TextInputLayout registerNickEdtTxt;
+    @InjectView(R.id.register_psd_edt_txt)
+    TextInputLayout registerPsdEdtTxt;
+    @InjectView(R.id.register_psd_re_edt_txt)
+    TextInputLayout registerPsdReEdtTxt;
+
     private String TAG = "Register1Activity";
 
     @InjectView(R.id.register_topBar)
@@ -134,8 +141,6 @@ public class Register1Activity extends AppCompatActivity {
         initView();
         initData();
         initListener();
-
-
     }
 
     Handler handler = new Handler() {
@@ -146,12 +151,13 @@ public class Register1Activity extends AppCompatActivity {
                 Log.e(TAG, "跳转");
                 String user_id = msg.obj.toString();
                 People people = new People();
-                people.add("UserJoin", new People.Whois("205","362be91f1c"));
                 people.update(getApplicationContext(), user_id, new UpdateListener() {
                     @Override
                     public void onSuccess() {
 
-
+                        Intent intent = new Intent(Register1Activity.this, MainActivity.class);
+                        startActivity(intent);
+                        Register1Activity.this.finish();
 
                     }
 
@@ -164,340 +170,317 @@ public class Register1Activity extends AppCompatActivity {
         }
     };
 
-        private void initView() {
-            height = new ArrayList<String>();
-            weight = new ArrayList<String>();
-            age = new ArrayList<String>();
-            sex = new ArrayList<String>();
+    private void initView() {
+        height = new ArrayList<String>();
+        weight = new ArrayList<String>();
+        age = new ArrayList<String>();
+        sex = new ArrayList<String>();
 
-            for (int i = 100; i < 265; i++) {
-                height.add(i + "");
-            }
-            for (int i = 50; i < 150; i++) {
-                weight.add(i + "");
-            }
-            for (int i = 10; i < 80; i++) {
-                age.add("" + i);
-            }
-            sex.add("男");
-            sex.add("女");
-
-
+        for (int i = 100; i < 265; i++) {
+            height.add(i + "");
         }
-
-        private void initData() {
-            registerPickerHigh.setData(height);
-            registerPickerWeight.setData(weight);
-            registerPickerAge.setData(age);
-            registerPickerSex.setData(sex);
-
+        for (int i = 50; i < 150; i++) {
+            weight.add(i + "");
         }
-
-        private void initListener() {
-
-            registerPickerHigh.setOnSelectListener(new PickerView.onSelectListener() {
-
-                @Override
-                public void onSelect(String text) {
-                    hight_pv = text;
-                }
-            });
-            registerPickerWeight.setOnSelectListener(new PickerView.onSelectListener() {
-
-                @Override
-                public void onSelect(String text) {
-                    weight_pv = text;
-                }
-            });
-            registerPickerAge.setOnSelectListener(new PickerView.onSelectListener() {
-
-                @Override
-                public void onSelect(String text) {
-                    age_pv = text;
-                }
-            });
-            registerPickerSex.setOnSelectListener(new PickerView.onSelectListener() {
-
-                @Override
-                public void onSelect(String text) {
-                    sex_pv = text;
-                }
-            });
-            registerPsdEdt.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (hasFocus) {
-                        // 此处为得到焦点时的处理内容
-                        // Toast.makeText(Register1Activity.this, "请输入6位数密码，数字和字母组合", Toast.LENGTH_SHORT).show();
-                    } else {
-                        // 此处为失去焦点时的处理内容
-                        password = registerPsdEdt.getText().toString();
-                        Pattern p = Pattern.compile("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,10}$");
-                        Matcher m = p.matcher(password);
-                        if (!m.matches()) {
-                            registerPsdEdt.setText("");
-                            Toast.makeText(Register1Activity.this, "请输入6-10位数密码，数字和字母组合", Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                }
-            });
-            registerPsdReEdt.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (hasFocus) {
-                        // 此处为得到焦点时的处理内容
-                    } else {
-                        // 此处为失去焦点时的处理内容
-                        password = registerPsdEdt.getText().toString();
-                        password_re = registerPsdReEdt.getText().toString();
-                        if (!password.equals(password_re)) {
-                            Toast.makeText(Register1Activity.this, "请正确重复输入密码", Toast.LENGTH_SHORT).show();
-                            registerPsdReEdt.setText("");
-
-                        }
-
-                    }
-                }
-            });
-
-            nick_name = registerNickEdt.getText().toString();
-            //注册事件
-            registerTopBar.setTopBarClickListener(new TopBarClickListener() {
-                @Override
-                public void rightBtnClick() {
-                    //处理右边按钮所对应的逻辑
-
-                    new AlertDialog.Builder(context)
-                            .setTitle("确认注册")
-                            .setMessage("是否确认开启健康世界？")
-                            .setPositiveButton("是", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                    final People user = new People();
-                                    user.setMobilePhoneNumber(phone);
-                                    user.setUsername(registerNickEdt.getText().toString());
-                                    user.setPassword(password);
-                                    user.setPeoage(age_pv);
-                                    user.setPeogender(sex_pv);
-                                    user.setPeoheight(hight_pv);
-                                    user.setPeoweight(weight_pv);
-                                    user.setPeoimg(user_img);
-                                    System.out.println(user.toString() + ":" + TAG);
-                                    user.signUp(context, new SaveListener() {
-
-                                        @Override
-                                        public void onSuccess() {
-                                            Message message = Message.obtain();
-                                            message.what = 1;
-                                            message.obj = user.getObjectId();
-                                            handler.sendMessage(message);
-                                        }
-
-                                        @Override
-                                        public void onFailure(int code, String arg0) {
-                                            // 添加失败
-                                            System.out.println(arg0 + ":" + code);
-                                        }
-                                    });
-
-                                }
-                            })
-                            .setNegativeButton("否", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-
-                                }
-                            })
-                            .show();
-
-
-                }
-
-                @Override
-                public void leftBtnClick() {
-                    //处理左边按钮所对应的逻辑
-                    Intent intent = new Intent(Register1Activity.this, Splash1Activity.class);
-                    startActivity(intent);
-                    finish();
-
-
-                }
-            });
-
-
+        for (int i = 10; i < 80; i++) {
+            age.add("" + i);
         }
+        sex.add("男");
+        sex.add("女");
 
-        @OnClick(R.id.register_photo)
-        public void onClick() {
-            showSelectDialog();
-        }
 
-        private void showSelectDialog() {
-            List<String> mTitles = new ArrayList<String>();
-            mTitles.add("从相册选择");
-            mTitles.add("拍照");
-            if (mPlayMoreDiaolog == null) {
-                mPlayMoreDiaolog = new PlayMoreDiaolog(
-                        Register1Activity.this, mTitles);
-            } else {
-                mPlayMoreDiaolog.setmTitles(mTitles);
+    }
+
+    private void initData() {
+        registerPickerHigh.setData(height);
+        registerPickerWeight.setData(weight);
+        registerPickerAge.setData(age);
+        registerPickerSex.setData(sex);
+
+    }
+
+    private void initListener() {
+
+
+        registerPickerHigh.setOnSelectListener(new PickerView.onSelectListener() {
+
+            @Override
+            public void onSelect(String text) {
+                hight_pv = text;
             }
-            mPlayMoreDiaolog.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        });
+        registerPickerWeight.setOnSelectListener(new PickerView.onSelectListener() {
 
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view,
-                                        int position, long id) {
-                    switch (position) {
-                        case 1:
-                            String status = Environment.getExternalStorageState();
-                            if (status.equals(Environment.MEDIA_MOUNTED)) {
-                                getFromCamera();// 从相机获取
-                            } else {
-                                // 没有SD卡;
-                                TLUtil.showToast(context, "手机没有SD卡");
+            @Override
+            public void onSelect(String text) {
+                weight_pv = text;
+            }
+        });
+        registerPickerAge.setOnSelectListener(new PickerView.onSelectListener() {
+
+            @Override
+            public void onSelect(String text) {
+                age_pv = text;
+            }
+        });
+        registerPickerSex.setOnSelectListener(new PickerView.onSelectListener() {
+
+            @Override
+            public void onSelect(String text) {
+                sex_pv = text;
+            }
+        });
+
+        //用.getEditText()拿到TextInputLayout里的EditText，因为TextInputLayout中有getEditText()方法，所以我们不需要findViewById，用get就行。
+        registerPsdEdtTxt.getEditText().addTextChangedListener(new Design(registerPsdEdtTxt, "密码长度不能小于6位或大于10"));
+
+        registerPsdReEdtTxt.getEditText().addTextChangedListener(new Design(registerPsdReEdtTxt, "密码长度不能小于6位或大于10"));
+
+        //注册事件
+        registerTopBar.setTopBarClickListener(new TopBarClickListener() {
+            @Override
+            public void rightBtnClick() {
+                //处理右边按钮所对应的逻辑
+                password_re = registerPsdReEdt.getText().toString();
+                password = registerPsdEdt.getText().toString();
+                nick_name = registerNickEdt.getText().toString();
+                System.out.println(password_re+":"+password+":"+nick_name+"sss");
+                if (!password.equals(password_re)) {
+                    registerPsdReEdtTxt.setError("两次密码不正确");
+                    return;
+                }
+                //123asd
+
+                new AlertDialog.Builder(context)
+                        .setTitle("确认注册")
+                        .setMessage("是否确认开启健康世界？")
+                        .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                final People user = new People();
+                                user.setMobilePhoneNumber(phone);
+                                user.setUsername(nick_name);
+                                user.setPassword(password);
+                                user.setPeoage(age_pv);
+                                user.setPeogender(sex_pv);
+                                user.setPeoheight(hight_pv);
+                                user.setPeoweight(weight_pv);
+                                user.setPeoimg(user_img);
+                                user.signUp(context, new SaveListener() {
+
+                                    @Override
+                                    public void onSuccess() {
+                                        Message message = Message.obtain();
+                                        message.what = 1;
+                                        message.obj = user.getObjectId();
+                                        handler.sendMessage(message);
+                                    }
+
+                                    @Override
+                                    public void onFailure(int code, String arg0) {
+                                        // 添加失败
+                                        System.out.println(arg0 + ":" + code);
+                                    }
+                                });
+
                             }
-                            break;
-                        case 0:
-                            getFromPhotos();// 从相相册获取
-                            break;
-                    }
-                    mPlayMoreDiaolog.dismiss();
-                    mPlayMoreDiaolog = null;
-                }
-            });
-            mPlayMoreDiaolog.show();
-        }
+                        })
+                        .setNegativeButton("否", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
 
-        // 相机拍照
-        private void getFromCamera() {
+                            }
+                        })
+                        .show();
+
+
+            }
+
+            @Override
+            public void leftBtnClick() {
+                //处理左边按钮所对应的逻辑
+                Intent intent = new Intent(Register1Activity.this, Splash1Activity.class);
+                startActivity(intent);
+                finish();
+
+
+            }
+        });
+
+
+    }
+
+    @OnClick(R.id.register_photo)
+    public void onClick() {
+        showSelectDialog();
+    }
+
+    private void showSelectDialog() {
+        List<String> mTitles = new ArrayList<String>();
+        mTitles.add("从相册选择");
+        mTitles.add("拍照");
+        if (mPlayMoreDiaolog == null) {
+            mPlayMoreDiaolog = new PlayMoreDiaolog(
+                    Register1Activity.this, mTitles);
+        } else {
+            mPlayMoreDiaolog.setmTitles(mTitles);
+        }
+        mPlayMoreDiaolog.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view,
+                                    int position, long id) {
+                switch (position) {
+                    case 1:
+                        String status = Environment.getExternalStorageState();
+                        if (status.equals(Environment.MEDIA_MOUNTED)) {
+                            getFromCamera();// 从相机获取
+                        } else {
+                            // 没有SD卡;
+                            TLUtil.showToast(context, "手机没有SD卡");
+                        }
+                        break;
+                    case 0:
+                        getFromPhotos();// 从相相册获取
+                        break;
+                }
+                mPlayMoreDiaolog.dismiss();
+                mPlayMoreDiaolog = null;
+            }
+        });
+        mPlayMoreDiaolog.show();
+    }
+
+    // 相机拍照
+    private void getFromCamera() {
+        try {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT,
+                    Uri.fromFile(getTempHeadFile()));
+            startActivityForResult(intent, IMAGE_FROM_CAMERA);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // 从相册选择
+    private void getFromPhotos() {
+        Intent intent = new Intent(Intent.ACTION_PICK, null);
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                IMAGE_UNSPECIFIED);
+        startActivityForResult(intent, IMAGE_FROM_PHOTOS);
+
+    }
+
+    // 剪裁图片
+    public void startPhotoZoom(Uri uri) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, IMAGE_UNSPECIFIED);
+        intent.putExtra("crop", "true");
+        // aspectX aspectY 是宽高的比例
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        // outputX outputY 是裁剪图片宽高
+        intent.putExtra("outputX", 130);
+        intent.putExtra("outputY", 130);
+        intent.putExtra("scale", true);
+        Uri imageUri = Uri.fromFile(getTempHeadFile());
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        intent.putExtra("return-data", false);
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        intent.putExtra("noFaceDetection", true);
+        try {
+            startActivityForResult(intent, PHOTORESOULT);
+        } catch (Exception e) {
+        }
+    }
+
+    // 获取图片的路径
+    private File getTempHeadFile() {
+        File f = null;
+        File head = null;
+        if (Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED))
+            f = new File(Environment.getExternalStorageDirectory(),
+                    CACHE_DIR);
+        else
+            f = getCacheDir();
+
+        if (!f.exists())
+            f.mkdirs();
+        else {
+            if (f.isFile()) {
+                f.deleteOnExit();
+                f.mkdirs();
+            }
+        }
+        head = new File(f, "myhead.jpg");
+        if (!head.exists()) {
             try {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                        Uri.fromFile(getTempHeadFile()));
-                startActivityForResult(intent, IMAGE_FROM_CAMERA);
-            } catch (Exception e) {
+                head.createNewFile();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
-        // 从相册选择
-        private void getFromPhotos() {
-            Intent intent = new Intent(Intent.ACTION_PICK, null);
-            intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                    IMAGE_UNSPECIFIED);
-            startActivityForResult(intent, IMAGE_FROM_PHOTOS);
-
-        }
-
-        // 剪裁图片
-        public void startPhotoZoom(Uri uri) {
-            Intent intent = new Intent("com.android.camera.action.CROP");
-            intent.setDataAndType(uri, IMAGE_UNSPECIFIED);
-            intent.putExtra("crop", "true");
-            // aspectX aspectY 是宽高的比例
-            intent.putExtra("aspectX", 1);
-            intent.putExtra("aspectY", 1);
-            // outputX outputY 是裁剪图片宽高
-            intent.putExtra("outputX", 130);
-            intent.putExtra("outputY", 130);
-            intent.putExtra("scale", true);
-            Uri imageUri = Uri.fromFile(getTempHeadFile());
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            intent.putExtra("return-data", false);
-            intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-            intent.putExtra("noFaceDetection", true);
-            try {
-                startActivityForResult(intent, PHOTORESOULT);
-            } catch (Exception e) {
-            }
-        }
-
-        // 获取图片的路径
-        private File getTempHeadFile() {
-            File f = null;
-            File head = null;
-            if (android.os.Environment.getExternalStorageState().equals(
-                    android.os.Environment.MEDIA_MOUNTED))
-                f = new File(android.os.Environment.getExternalStorageDirectory(),
-                        CACHE_DIR);
-            else
-                f = getCacheDir();
-
-            if (!f.exists())
-                f.mkdirs();
-            else {
-                if (f.isFile()) {
-                    f.deleteOnExit();
-                    f.mkdirs();
-                }
-            }
-            head = new File(f, "myhead.jpg");
-            if (!head.exists()) {
-                try {
-                    head.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            f = null;
-            return head;
-        }
-
-        @Override
-        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
-            switch (requestCode) {
-                //从相机获取到了照片路径
-                case IMAGE_FROM_CAMERA:
-                    if (resultCode == Activity.RESULT_OK) {
-                        startPhotoZoom(Uri.fromFile(getTempHeadFile()));
-                    }
-                    break;
-                //从相册获取到了照片路径
-                case IMAGE_FROM_PHOTOS:
-                    if (resultCode == Activity.RESULT_OK) {
-                        startPhotoZoom(data.getData());
-                    }
-                    break;
-                //拿到了图片结果
-                case PHOTORESOULT:
-                    if (resultCode == Activity.RESULT_OK) {
-
-                        upload_bitmap = BitmapFactory.decodeFile(getTempHeadFile().getPath());
-                        Log.e(TAG, getTempHeadFile().getPath());
-
-                        if (upload_bitmap == null)
-                            return;
-
-                        String picPath = getTempHeadFile().getPath();
-                        final BmobFile bmobFile = new BmobFile(new File(picPath));
-                        bmobFile.uploadblock(context, new UploadFileListener() {
-
-                            @Override
-                            public void onSuccess() {
-                                // TODO Auto-generated method stub
-                                //bmobFile.getUrl()---返回的上传文件的地址（不带域名）
-                                //bmobFile.getFileUrl(context)--返回的上传文件的完整地址（带域名）
-                                is_takephoto = true;//设置头像
-                                user_img = bmobFile.getFileUrl(context);
-                                System.out.println(user_img + ":" + TAG);
-                            }
-
-                            @Override
-                            public void onProgress(Integer value) {
-                                // 返回的上传进度（百分比）
-                            }
-
-                            @Override
-                            public void onFailure(int code, String msg) {
-                                Toast.makeText(Register1Activity.this, "头像上传失败", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        registerPhoto.setImageBitmap(upload_bitmap);
-                    }
-                    break;
-            }
-        }
-
+        f = null;
+        return head;
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            //从相机获取到了照片路径
+            case IMAGE_FROM_CAMERA:
+                if (resultCode == Activity.RESULT_OK) {
+                    startPhotoZoom(Uri.fromFile(getTempHeadFile()));
+                }
+                break;
+            //从相册获取到了照片路径
+            case IMAGE_FROM_PHOTOS:
+                if (resultCode == Activity.RESULT_OK) {
+                    startPhotoZoom(data.getData());
+                }
+                break;
+            //拿到了图片结果
+            case PHOTORESOULT:
+                if (resultCode == Activity.RESULT_OK) {
+
+                    upload_bitmap = BitmapFactory.decodeFile(getTempHeadFile().getPath());
+                    Log.e(TAG, getTempHeadFile().getPath());
+
+                    if (upload_bitmap == null)
+                        return;
+
+                    String picPath = getTempHeadFile().getPath();
+                    final BmobFile bmobFile = new BmobFile(new File(picPath));
+                    bmobFile.uploadblock(context, new UploadFileListener() {
+
+                        @Override
+                        public void onSuccess() {
+                            // TODO Auto-generated method stub
+                            //bmobFile.getUrl()---返回的上传文件的地址（不带域名）
+                            //bmobFile.getFileUrl(context)--返回的上传文件的完整地址（带域名）
+                            is_takephoto = true;//设置头像
+                            user_img = bmobFile.getFileUrl(context);
+                            System.out.println(user_img + ":" + TAG);
+                        }
+
+                        @Override
+                        public void onProgress(Integer value) {
+                            // 返回的上传进度（百分比）
+                        }
+
+                        @Override
+                        public void onFailure(int code, String msg) {
+                            Toast.makeText(Register1Activity.this, "头像上传失败", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    registerPhoto.setImageBitmap(upload_bitmap);
+                }
+                break;
+        }
+    }
+
+}

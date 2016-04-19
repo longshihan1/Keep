@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 
 import com.news.keep.R;
 import com.news.keep.utils.Constans;
-import com.news.keep.view.Login_Dialog;
+import com.news.keep.fragment.Login_Dialog;
 import com.news.keep.view.RoundImageView;
 import com.news.keep.view.model.BitmapDraw;
 

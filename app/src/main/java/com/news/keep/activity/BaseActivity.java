@@ -1,127 +1,229 @@
 package com.news.keep.activity;
 
+import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.view.Window;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
-import java.util.List;
+import com.news.keep.App;
+import com.news.keep.R;
+import com.news.keep.utils.http.RespHandleListener;
 
-public class BaseActivity extends FragmentActivity {
-	private final static int ACTIVITY_LOGIN_REQ = 10000;
-	public final static int LOGIN_RESULT = 10002;
-	public final static String LOGIN_RESULT_CODE = "login_result";
-	private InputMethodManager imm;
-	private Intent mIntent;
-	private int req;
+import butterknife.ButterKnife;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setSoftInputMode(
-				WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
-						| WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-		imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-	}
+/**
+ * Created by Administrator on 2016/3/22.
+ * 项目名称：Keep
+ * 类描述：Activity的baseActivity
+ * 创建人：Administrator
+ * 创建时间：2016/3/22 18:07
+ * 修改人：Administrator
+ * 修改时间：2016/3/22 18:07
+ * 修改备注：
+ */
+public abstract class BaseActivity extends AppCompatActivity {
+    private static final int ACTIVITY_RESUME = 0;
+    private static final int ACTIVITY_PAUSE = 2;
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		int reqCode = -1;
-		if (mIntent != null) {
-			reqCode = mIntent.getIntExtra("req", -1);
-			switch (requestCode) {
-			case ACTIVITY_LOGIN_REQ:
-				if (resultCode == LOGIN_RESULT) {
-					boolean isLogin = data.getBooleanExtra(LOGIN_RESULT_CODE,
-							false);
-					if (isLogin) {
-						if (reqCode == -1) {
-							startActivity(mIntent);
-						} else {
-							startActivityForResult(mIntent, reqCode);
-						}
-					}
-				}
-				break;
-			}
-		}
-		FragmentManager manager = getSupportFragmentManager();
-		List<Fragment> list = manager.getFragments();
-		if (list != null && !list.isEmpty()) {
-			final int count = list.size();
-			for (int i = 0; i < count; i++) {
-				Fragment fragment = list.get(i);
-				if (fragment != null && fragment.isVisible()) {
-					fragment.onActivityResult(requestCode, resultCode, data);
-				}
-			}
-		}
-	}
+    InputMethodManager _inputMethodManager;
+    protected Resources res;
+    protected App baseApp;
+    protected static final String TAG = BaseFragment.class.getName();
+    protected Toast mToast;
 
-	public void startActivity(Intent intent, boolean checkLogin) {
-		/*mIntent = intent;
-		if (mIntent != null) {
-			if (checkLogin) {
-				if (!LoginUtil.isLogin()) {
-					Intent newIntent = new Intent(this, Register1Activity.class);
-					startActivityForResult(newIntent, ACTIVITY_LOGIN_REQ);
-				} else {
-					startActivity(intent);
-				}
-			} else {
-				startActivity(intent);
-			}
-		}*/
-	}
+    public int activityState;
 
-	public void startActivityForResult(Intent intent, int reqCode,
-			boolean checkLogin) {
-		mIntent = intent;
-		/*if (mIntent != null) {
-			mIntent.putExtra("REQ", reqCode);
-			if (checkLogin) {
-				if (!LoginUtil.isLogin()) {
-					Intent newIntent = new Intent(this, Register1Activity.class);
-					startActivityForResult(newIntent, ACTIVITY_LOGIN_REQ);
-				} else {
-					startActivityForResult(intent, req);
-				}
-			} else {
-				startActivityForResult(intent, req);
-			}
-		}*/
-	}
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE
+            , Manifest.permission.WRITE_EXTERNAL_STORAGE
+            , Manifest.permission.WRITE_CONTACTS
+            , Manifest.permission.GET_ACCOUNTS
+            , Manifest.permission.READ_CONTACTS
+            , Manifest.permission.READ_CALL_LOG
+            , Manifest.permission.READ_PHONE_STATE
+            , Manifest.permission.CALL_PHONE
+            , Manifest.permission.WRITE_CALL_LOG
+            , Manifest.permission.USE_SIP
+            , Manifest.permission.PROCESS_OUTGOING_CALLS
+            , Manifest.permission.ADD_VOICEMAIL
+            , Manifest.permission.READ_CALENDAR
+            , Manifest.permission.WRITE_CALENDAR
+            , Manifest.permission.CAMERA
+            , Manifest.permission.CAMERA
+            , Manifest.permission.BODY_SENSORS
+            , Manifest.permission.ACCESS_FINE_LOCATION
+            , Manifest.permission.ACCESS_COARSE_LOCATION
+            , Manifest.permission.READ_EXTERNAL_STORAGE
+            , Manifest.permission.WRITE_EXTERNAL_STORAGE
+            , Manifest.permission.RECORD_AUDIO
+            , Manifest.permission.READ_SMS
+            , Manifest.permission.RECEIVE_WAP_PUSH
+            , Manifest.permission.RECEIVE_MMS
+            , Manifest.permission.RECEIVE_SMS
+            , Manifest.permission.SEND_SMS
+    };
 
-	public void hideInputFromwindow() {
-		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		if (imm.isActive() && getCurrentFocus() != null) {
-			if (getCurrentFocus().getWindowToken() != null) {
-				imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-						InputMethodManager.HIDE_NOT_ALWAYS);
-			}
-		}
-	}
+    // 是否允许全屏
+    private boolean mAllowFullScreen = true;
 
-	public void toPage(Class<?> c) {
-		hideInputFromwindow();
-		Intent intent = new Intent(this, c);
-		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(intent);
-	}
+    public abstract void initView();
 
-	public void toPage(Class<?> c, Bundle bundle) {
-		hideInputFromwindow();
-		Intent intent = new Intent(this, c);
-		intent.putExtras(bundle);
-		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(intent);
-	}
+    public abstract void initData();
 
+    public abstract void initListener();
+
+    protected abstract int getLayout();
+
+
+    public void setAllowFullScreen(boolean allowFullScreen) {
+        this.mAllowFullScreen = allowFullScreen;
+
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(getLayout());
+        res = this.getApplicationContext().getResources();
+
+        baseApp = (App) this.getApplication();
+
+        _inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        this.getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//竖屏锁定
+    /*    if (mAllowFullScreen) {
+            getSupportActionBar().hide(); // 取消标题
+        }*/
+        verifyStoragePermissions(this);
+        ButterKnife.inject(this);
+        initView();
+        initData();
+        initListener();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        activityState = ACTIVITY_RESUME;
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        activityState = ACTIVITY_PAUSE;
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        baseApp.removeActivity(this);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            if (getCurrentFocus() != null
+                    && getCurrentFocus().getWindowToken() != null) {
+                _inputMethodManager.hideSoftInputFromWindow(getCurrentFocus()
+                        .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }
+        return super.onTouchEvent(event);
+    }
+
+    //网络错误种类
+    protected int getNetworkErrorTip(int code) {
+
+        Log.d(TAG, "getNetworkErrorTip - code = \"" + code + "\"");
+
+        int textResId = R.string.error_network_time_out;
+        switch (code) {
+
+            case RespHandleListener.ErrCode.ERR_NETWORK_NOT_AVAILABLE:
+                textResId = R.string.error_network_not_available;
+                break;
+
+            case RespHandleListener.ErrCode.ERR_SERVER_ERROR:
+                textResId = R.string.error_network_server_busy;
+                break;
+
+            case RespHandleListener.ErrCode.ERR_TIME_OUT:
+            case RespHandleListener.ErrCode.ERR_CLIENT_ERROR:
+            case RespHandleListener.ErrCode.ERR_UNKNOWN_ERROR:
+                break;
+
+            default:
+                break;
+
+        }
+        Log.d(TAG, "getNetworkErrorTip - textResId = \"" + textResId + "\"");
+        return textResId;
+    }
+
+    public static void verifyStoragePermissions(AppCompatActivity activity) {
+        // Check if we have write permission
+        //访问媒体文件的权限
+        int WRITE_EXTERNAL_STORAGE = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (WRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
+            // 我们没有权限，以提示用户
+            ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
+        }
+    }
+
+    public void showToast(String text) {
+        if (!TextUtils.isEmpty(text)) {
+            if (mToast == null) {
+                mToast = Toast.makeText(getApplicationContext(), text,
+                        Toast.LENGTH_SHORT);
+            } else {
+                mToast.setText(text);
+            }
+            mToast.show();
+        }
+    }
+
+    public void showToast(int resId) {
+        if (mToast == null) {
+            mToast = Toast.makeText(getApplicationContext(), resId,
+                    Toast.LENGTH_SHORT);
+        } else {
+            mToast.setText(resId);
+        }
+        mToast.show();
+    }
+
+    //隐藏软键盘
+    private void hideKeyboard() {
+        View view = getCurrentFocus();
+        if (view != null) {
+            ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).
+                    hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
 }

@@ -67,7 +67,7 @@ public class CircularProgressView extends View {
                 defStyleAttr, 0);
 
         mBorderWidth = a.getDimension(
-                R.styleable.CircularProgressView_borderWidth,
+                R.styleable.CircularProgressView_borderWidthw,
                 getResources().getDimension(R.dimen.circular_default_border_width));
 
         angleAnimatorDuration = a.getInt(

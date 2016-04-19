@@ -105,7 +105,7 @@ public class Net {
         App.getHttpQueues().add(stringRequest);
         //mQueue.add(stringRequest);
     }
-
+//context上下文，handler将数据抛出去，tag标记，msg弹出文字，
     public static synchronized void sendHttpGet(Context context, final Handler handler, String tag, String msg, String url, final String effect, final String offset) {
         VolleyRequest.RequestGet(context, url, tag, new VolleyInterface(context, VolleyInterface.listener, VolleyInterface.errorListener) {
             @Override

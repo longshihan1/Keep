@@ -2,13 +2,11 @@ package com.news.keep.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -33,7 +31,8 @@ import java.util.List;
  * 修改备注：
  */
 public class TrainMainAdapter extends BaseAdapter {
-    private String TAG="TrainMainAdapter";
+
+    private String TAG = "TrainMainAdapter";
     private Context context;
     private PullToRefreshListView listview;
     public static final int VALUE_TIME_TIP = 0;// 2种不同的布局
@@ -62,9 +61,9 @@ public class TrainMainAdapter extends BaseAdapter {
         this.context = context;
         this.lists = lists;
         this.listview = listview;
-
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader = new ImageLoader(context);
+
 
     }
 
@@ -118,38 +117,22 @@ public class TrainMainAdapter extends BaseAdapter {
         holder.trainmaintxt31.setText(lesson_count);//训练天数
         holder.trainmaintxt33.setText(bodypart);//部位
         holder.trainmaintext41.setText(trainee_count);//参加人数
-        imageLoader.DisplayImage(icon, holder.trainmainrea);
-        holder.trainmainrea1.setBackground(holder.trainmainrea.getDrawable());
+        //加载图片
+        imageLoader.DisplayImage(icon, holder.trainmainrea1);
         holder.trainmainrea1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent=new Intent(context,TrainItemDisplay.class);
+                Intent intent = new Intent(context, TrainItemDisplay.class);
                 //传递数据
-                Bundle bundle=new Bundle();
-               bundle.putSerializable("map", list);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("map", list);
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }
         });
         return convertView;
     }
-
-
-    //采用Handler+Thread+封装外部接口
-    private void loadImage(final String url, final View view) {
-        //如果缓存过就会从缓存中取出图像，ImageCallback接口中方法也不会被执行
-        Drawable cacheImage = asyncImageLoader3.loadDrawable(url, new AsyncImageLoader3.ImageCallback() {
-            //请参见实现：如果第一次加载url时下面方法会执行
-            public void imageLoaded(Drawable imageDrawable) {
-                view.setBackground(imageDrawable);
-            }
-        });
-        if (cacheImage != null) {
-            view.setBackground(cacheImage);
-        }
-    }
-
 
     public class ViewHolder {
         public final TextView trainmaintxt11;
@@ -161,7 +144,6 @@ public class TrainMainAdapter extends BaseAdapter {
         public final TextView trainmaintxt33;
         public final TextView trainmaintext41;
         public final TextView trainmaintext42;
-        public final ImageView trainmainrea;
         public final RelativeLayout trainmainrea1;
         public final View root;
 
@@ -175,9 +157,9 @@ public class TrainMainAdapter extends BaseAdapter {
             trainmaintxt33 = (TextView) root.findViewById(R.id.train_main_txt3_3);
             trainmaintext41 = (TextView) root.findViewById(R.id.train_main_text_use);
             trainmaintext42 = (TextView) root.findViewById(R.id.train_main_text4_2);
-            trainmainrea = (ImageView) root.findViewById(R.id.train_main_rea);
             trainmainrea1 = (RelativeLayout) root.findViewById(R.id.train_main_rea1);
             this.root = root;
         }
     }
+
 }
