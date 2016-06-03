@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion '23.0.1'
     defaultConfig {
         applicationId "com.news.keep"
         minSdkVersion 19
@@ -42,8 +42,6 @@ dependencies {
     //bmob-sms ：Bmob单独为短信服务提供的包
     compile name: 'SMSSDK-2.0.2', ext: 'aar'
     compile name: 'SMSSDKGUI-2.0.2', ext: 'aar'
-    compile files('libs/MobCommons-2016.0303.1229.jar')
-    compile files('libs/MobTools-2016.0303.1229.jar')
     compile files('libs/nineoldandroids-library-2.4.0.jar')
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.android.support:support-v4:23.2.1'
@@ -63,4 +61,16 @@ dependencies {
     compile 'com.android.support:cardview-v7:23.2.1'
     compile 'com.android.support:recyclerview-v7:23.2.1'
     compile 'com.android.support:design:23.2.1'
+    compile 'de.hdodenhof:circleimageview:2.0.0'
+    compile 'com.github.bumptech.glide:glide:3.5.2'
+    compile files('libs/MobCommons-2016.0426.1819.jar')
+    compile files('libs/MobTools-2016.0426.1819.jar')
+    compile files('libs/ShareSDK-Core-2.7.2.jar')
+    compile files('libs/ShareSDK-QQ-2.7.2.jar')
+    compile files('libs/ShareSDK-QZone-2.7.2.jar')
+    compile files('libs/ShareSDK-SinaWeibo-2.7.2.jar')
+    compile files('libs/ShareSDK-Wechat-2.7.2.jar')
+    compile files('libs/ShareSDK-Wechat-Core-2.7.2.jar')
+    compile files('libs/ShareSDK-Wechat-Favorite-2.7.2.jar')
+    compile files('libs/ShareSDK-Wechat-Moments-2.7.2.jar')
 }

@@ -130,6 +130,7 @@ public class Login_Dialog extends DialogFragment {
      //   hideKeyboard();
         username1 = loginEditUsername.getText().toString();
         password1 = loginEditPsd.getText().toString();
+        Log.e("login",username1+"::::"+password1);
       /*  Pattern p = Pattern.compile("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,10}$");
         Matcher m = p.matcher(password1);
         if (!m.matches()) {

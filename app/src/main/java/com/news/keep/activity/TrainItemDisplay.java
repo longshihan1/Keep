@@ -29,6 +29,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
@@ -162,6 +163,39 @@ public class TrainItemDisplay extends AppCompatActivity {
 
     private void initData() {
         list = (Train_Display.CategoriesBean) getIntent().getSerializableExtra("map");
+        final String id=list.getId();
+
+        BmobUser bmobUser = BmobUser.getCurrentUser(this);
+        String user_id = bmobUser.getObjectId();
+        BmobQuery<Train_Display.CategoriesBean> query = new BmobQuery<Train_Display.CategoriesBean>();
+        People post = new People();
+        post.setObjectId(user_id);
+        query.addWhereRelatedTo("UserAtt", new BmobPointer(post));
+        query.findObjects(this, new FindListener<Train_Display.CategoriesBean>() {
+
+            @Override
+            public void onSuccess(List<Train_Display.CategoriesBean> list1) {
+                for (int i = 0; i <list1.size() ; i++) {
+                    Log.e(TAG,list1.get(i).getId());
+                    if (list1.get(i).getId().equals(id)){
+                        itemDisplayAddLesson.setClickable(false);
+                        itemDisplayAddLesson.setBackgroundResource(R.drawable.add_lesson);
+                        itemDisplayAddLesson.setClickable(false);
+                        includeJion.setText("已添加");
+                        includeJion.setTextColor(Color.BLACK);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onError(int code, String msg) {
+                Log.i("life", "查询失败：" + code + "-" + msg);
+            }
+        });
+
+
+
     }
 
     private void initView() {
@@ -175,8 +209,10 @@ public class TrainItemDisplay extends AppCompatActivity {
         includeLin2.setText(list.getCalorie_count());//卡路里
         includeLin3.setText(Integer.toString(list.getBonus()));//活力值
         trainDisplayInfo.setText(list.getInstruction());//建议
-
         trainDisplayPeocount.setText(Integer.toString(list.getTrainee_count()));
+
+
+
     }
 
     private void initListener() {
@@ -202,7 +238,6 @@ public class TrainItemDisplay extends AppCompatActivity {
                             Message message = Message.obtain();
                             message.what = 1;
                             message.obj = bean;
-
                             Log.e(TAG, "Success" + bean.getObjectId());
                             handler.sendMessage(message);
                         }
@@ -230,13 +265,11 @@ public class TrainItemDisplay extends AppCompatActivity {
                         bean1.save(getApplicationContext(), new SaveListener() {
                             @Override
                             public void onSuccess() {
-                                Log.e(TAG, "2");
                                 Message message = Message.obtain();
                                 message.what = 1;
                                 message.obj = bean1;
                                 handler.sendMessage(message);
                             }
-
                             @Override
                             public void onFailure(int code, String arg0) {
 

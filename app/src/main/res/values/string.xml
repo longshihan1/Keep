@@ -74,4 +74,12 @@
     <string name="item_display_add">参与训练</string>
     <string name="item_display_peo">小伙伴也在练</string>
     <string name="item_people_type">适用人群：男女通用</string>
+
+    <!--动态详情界面-->
+
+    <string name="item_title">动态详情</string>
+    <string name="item_likes">加油</string>
+    <string name="item_comments">全部评论</string>
+    <string name="item_btn">发布</string>
+    <string name="item_autotext">说点什么</string>
 </resources>

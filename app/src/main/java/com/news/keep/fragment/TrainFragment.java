@@ -46,6 +46,7 @@ import cn.bmob.v3.listener.FindListener;
  */
 public class TrainFragment extends Fragment {
     private String TAG = "TrainFragment";
+
     @InjectView(R.id.train_zaixian_time)
     TextView trainZaixianTime;
     @InjectView(R.id.train_city)
@@ -97,7 +98,7 @@ public class TrainFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_train, container, false);
         ButterKnife.inject(this, view);
 
-        lists = new ArrayList<Train_Display.CategoriesBean>();
+        lists = new ArrayList<>();
         adapter = new TrainPageAdapter(context, trainMainLv, lists);
 
         initView();
@@ -109,7 +110,7 @@ public class TrainFragment extends Fragment {
     private void initView() {
         BmobUser bmobUser = BmobUser.getCurrentUser(getActivity());
         String user_id = bmobUser.getObjectId();
-        BmobQuery<Train_Display.CategoriesBean> query = new BmobQuery<Train_Display.CategoriesBean>();
+        BmobQuery<Train_Display.CategoriesBean> query = new BmobQuery<>();
         People post = new People();
         post.setObjectId(user_id);
         query.addWhereRelatedTo("UserAtt", new BmobPointer(post));
@@ -117,7 +118,6 @@ public class TrainFragment extends Fragment {
 
             @Override
             public void onSuccess(List<Train_Display.CategoriesBean> list) {
-                System.out.println(list.size()+"----lllllllllll");
                 adapter.setData(list);
                 trainMainLv.setAdapter(adapter);
                 setListViewHeightBasedOnChildren(trainMainLv);
@@ -146,6 +146,7 @@ public class TrainFragment extends Fragment {
         switch (view.getId()) {
             case R.id.train_add_lesson:
                 Intent intent = new Intent(getActivity(), Train_add.class);
+                getActivity().finish();
                 startActivity(intent);
                 break;
             case R.id.train_city:
@@ -183,6 +184,11 @@ public class TrainFragment extends Fragment {
         @Override
         public int getCount() {
             return 3;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return super.getItemId(position);
         }
     }
 
@@ -229,13 +235,10 @@ public class TrainFragment extends Fragment {
 
     /**
      * 添加小点
-     *
-     * @throws
      * @since 1.0.0
      */
     public void addPointView() {
-        trainViewpageThreeRound.setBackgroundColor(getResources().getColor(
-                android.R.color.transparent));// Color.argb(200, 135, 135, 152)
+        trainViewpageThreeRound.setBackgroundColor(getResources().getColor(android.R.color.transparent));// Color.argb(200, 135, 135, 152)
         for (int i = 0; i < mFragments.size(); i++) {
             ImageView pointView = new ImageView(context);
             if (i == 0) {
@@ -248,8 +251,6 @@ public class TrainFragment extends Fragment {
 
     /**
      * 改变小点
-     *
-     * @throws
      * @since 1.0.0
      */
     public void changePointView2(int oldposition, int currposition) {
@@ -270,7 +271,6 @@ public class TrainFragment extends Fragment {
             return;
         }
         int totalHeight = 0;
-        System.out.println(listAdapter.getCount()+"不会有两遍吧");
         for (int i = 0, len = listAdapter.getCount(); i < len; i++) {
             // listAdapter.getCount()返回数据项的数目
             View listItem = listAdapter.getView(i, null, listView);
@@ -279,7 +279,6 @@ public class TrainFragment extends Fragment {
             // 统计所有子项的总高度
             totalHeight +=500;
         }
-
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight+20;
         listView.setLayoutParams(params);

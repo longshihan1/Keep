@@ -48,12 +48,10 @@ public class ImageLoader {
 
     // 当进入listview时默认的图片，可换成你自己的默认图片
     final int stub_id = R.mipmap.add_mip_moren;
-
     // 最主要的方法
     public void DisplayImage(String url, View imageView) {
         imageViews.put(imageView, url);
         // 先从内存缓存中查找
-
         Bitmap bitmap = memoryCache.get(url);
         if (bitmap != null)
             imageView.setBackground(ImageUtils.bitmapToDrawable(bitmap));
@@ -106,7 +104,7 @@ public class ImageLoader {
             BitmapFactory.decodeStream(new FileInputStream(f), null, o);
 
             // Find the correct scale value. It should be the power of 2.
-            final int REQUIRED_SIZE = 70;
+            final int REQUIRED_SIZE = 200;
             int width_tmp = o.outWidth, height_tmp = o.outHeight;
             int scale = 1;
             while (true) {

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.news.keep.view.RoundImageView
+        android:id="@+id/detail_useravatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+    />
+    <TextView
+        android:id="@+id/detail_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginTop="@dimen/dimen_5"
+        android:layout_toRightOf="@id/detail_useravatar"
+        android:text="Eric "
+        android:textSize="@dimen/dimen_20"
+    />
+    <TextView
+        android:id="@+id/detail_userderction"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/detail_useravatar"
+        android:minLines="2"/>
+    <ImageView
+        android:id="@+id/detail_image"
+        android:layout_width="450dp"
+        android:layout_height="450dp"
+        android:layout_below="@id/detail_userderction"
+    />
+    <LinearLayout
+        android:id="@+id/detail_sercond_line"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/detail_image"
+        android:layout_marginLeft="@dimen/dimen_20"
+        android:layout_marginRight="@dimen/dimen_20"
+        android:orientation="horizontal"
+    >
+        <ImageView
+            android:id="@+id/detail_icon_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/icon_hot_tag_recommend_reply"/>
+        <ImageView
+            android:id="@+id/detail_icon_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/icon_hot_tag_recommend_praise"/>
+        <ImageView
+            android:id="@+id/detail_icon_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@mipmap/replyaction"/>
+        <ImageView
+            android:id="@+id/detail_icon_4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:src="@mipmap/replymoremore"/>
+    </LinearLayout>
+</RelativeLayout>
+

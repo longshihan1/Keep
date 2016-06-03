@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="50dp"
-            android:text="上海"
+            android:text="淮南"
             android:textColor="@color/wheat"
             android:textSize="20dp" />
 
@@ -111,7 +111,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_10"
                 android:layout_marginRight="@dimen/dimen_10">
-
             </ListView>
 
             <!--    <com.news.keep.view.Trans_main_rela

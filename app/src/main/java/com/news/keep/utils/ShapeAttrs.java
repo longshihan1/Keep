@@ -7,6 +7,7 @@ import android.graphics.drawable.GradientDrawable;
  * 形状pressed、normal等集合样式属性
  * @author thduan
  * 2015-12-29 14:33:32
+ * @noinspection deprecation
  */
 public class ShapeAttrs extends BaseAttrs{
 	private static final int DEFAULT_STROKE_WIDTH = 0;
@@ -25,7 +26,7 @@ public class ShapeAttrs extends BaseAttrs{
 	private float[] cornerRadii;
 	/** 默认为矩形 */
 	private int shapeType = GradientDrawable.RECTANGLE;
-	
+
 	public int getNormalArgb() {
 		return normalArgb;
 	}

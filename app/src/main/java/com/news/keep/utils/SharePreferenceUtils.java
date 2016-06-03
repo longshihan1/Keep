@@ -89,6 +89,7 @@ public class SharePreferenceUtils {
         return sharePreferenceUtils.mSharedPreferences.getString(key, null);
     }
 
+
     public static long getLong(String key) {
         return sharePreferenceUtils.mSharedPreferences.getLong(key,
                 DEFAULT_VALUE);

@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
  * 图片pressed、normal等集合样式属性
  * @author thduan
  * 2015-12-29 14:33:41
+ * @noinspection deprecation
  */
 public class DrawableAttrs extends BaseAttrs{
 	private Drawable normalDrawable;

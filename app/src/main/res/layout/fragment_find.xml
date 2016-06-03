@@ -1,17 +1,16 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:ptr="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.news.keep.fragment.FindFragment">
 
-    <LinearLayout
+  <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical">
 
-        <RelativeLayout
+      <!--    <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="100dp">
 
@@ -73,22 +72,24 @@
             </RadioGroup>
 
         </RelativeLayout>
+-->
 
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/SwipeRefreshLayout"
+                android:id="@+id/find_wiperefreshlayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+                    android:id="@+id/find_recyclerView"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:scrollbars="vertical">
+                </android.support.v7.widget.RecyclerView>
             </android.support.v4.widget.SwipeRefreshLayout>
 
         </android.support.design.widget.CoordinatorLayout>

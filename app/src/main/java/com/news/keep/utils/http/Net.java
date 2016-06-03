@@ -1,14 +1,17 @@
 package com.news.keep.utils.http;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.news.keep.App;
@@ -40,9 +43,35 @@ public class Net {
         return mRequestQueue;
     }
 
-    public static synchronized void sendHttp(Context context, final Handler handler, String msg, String url, final String effect, final String offset) {
+    public static synchronized void sendImg(Context context,final Handler handler,String url) {
         RequestQueue mQueue = Volley.newRequestQueue(context);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        ImageRequest imageRequest = new ImageRequest(url, new Response.Listener<Bitmap>() {
+            @Override
+            public void onResponse(Bitmap response) {
+
+                Message msg1 = handler.obtainMessage();
+                msg1.what = SUCCESS;
+                msg1.obj = response;
+                handler.sendMessage(msg1);
+            }
+        }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Message message = handler.obtainMessage(ERROR);
+                Log.e("www", error.toString());
+                handler.sendMessage(message);
+
+            }
+        });
+        imageRequest.setTag("html_img");
+        App.getHttpQueues().add(imageRequest);
+    }
+
+    public static synchronized void sendHttp(Context context, final Handler handler, String msg,
+                                             String url, final String effect, final String offset) {
+        RequestQueue mQueue = Volley.newRequestQueue(context);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response
+                .Listener<String>() {
 
             @Override
             public void onResponse(String msg) {
@@ -74,7 +103,8 @@ public class Net {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<String, String>();
-                header.put("Cookie", "PHPSESSID=ape9dhjq3ti42t0r91fahuglm2;user_token=cbe8c107-da1d-40cf-a3ca-f7cf3777fc97");
+                header.put("Cookie", "PHPSESSID=ape9dhjq3ti42t0r91fahuglm2;" +
+                        "user_token=cbe8c107-da1d-40cf-a3ca-f7cf3777fc97");
                 return header;
             }
 
@@ -105,14 +135,18 @@ public class Net {
         App.getHttpQueues().add(stringRequest);
         //mQueue.add(stringRequest);
     }
-//context上下文，handler将数据抛出去，tag标记，msg弹出文字，
-    public static synchronized void sendHttpGet(Context context, final Handler handler, String tag, String msg, String url, final String effect, final String offset) {
-        VolleyRequest.RequestGet(context, url, tag, new VolleyInterface(context, VolleyInterface.listener, VolleyInterface.errorListener) {
+
+    //context上下文，handler将数据抛出去，tag标记，msg弹出文字，
+    public static synchronized void sendHttpGet(Context context, final Handler handler, String
+            tag, String msg, String url, final String effect, final String offset) {
+        VolleyRequest.RequestGet(context, url, tag, new VolleyInterface(context, VolleyInterface
+                .listener, VolleyInterface.errorListener) {
             @Override
             public void onMySuccess(String result) {
                 Message msg1 = handler.obtainMessage();
                 msg1.what = SUCCESS;
                 msg1.obj = result;
+                Log.e("www", "1=" + result + "");
                 handler.sendMessage(msg1);
 
             }
@@ -120,6 +154,7 @@ public class Net {
             @Override
             public void onMyError(VolleyError error) {
                 Message message = handler.obtainMessage(ERROR);
+                Log.e("www", error.toString());
                 handler.sendMessage(message);
             }
         });
@@ -158,4 +193,47 @@ public class Net {
         }
         return buf.toString();
     }
+
+    public static synchronized void sendHttp_Auth(Context context, final Handler handler,
+                                                  String msg, String url, final String effect,
+                                                  final String offset) {
+        RequestQueue mQueue = Volley.newRequestQueue(context);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response
+                .Listener<String>() {
+
+            @Override
+            public void onResponse(String msg) {
+                // parseString(msg.toString(), handler);
+                Message msg1 = handler.obtainMessage();
+                msg1.what = SUCCESS;
+                msg1.obj = msg;
+                handler.sendMessage(msg1);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Message message = handler.obtainMessage(ERROR);
+                handler.sendMessage(message);
+            }
+        }) {
+
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<String, String>();
+                header.put("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9" +
+                        ".eyJfaWQiOiI1NmViY2Y5ZjMwZDM3YTk3MWE5YzM3ODEiLCJ1c2VybmFtZSI6Ium" +
+                        "-memAneWvkiIsImF2YXRhciI6Imh0dHA6Ly90dmExLnNpbmFpbWcuY24vY3JvcC4wLjAuMTgwLjE4MC4xMDI0L2E5ZjliMmMzancxZThxZ3A1Ym16eWoyMDUwMDUwYWE4LmpwZyIsImlhdCI6MTQ2MzczODg5MCwiZXhwIjoxNDY2MzMwODkwLCJpc3MiOiJodHRwOi8vd3d3LmdvdG9rZWVwLmNvbS8ifQ.TezjwMUON0salGVXGN61Y9BSgSCaQolX7Nj8s5TG89g");
+                return header;
+            }
+
+
+        };
+        stringRequest.setTag("Bar");
+        App.getHttpQueues().add(stringRequest);
+        //mQueue.add(stringRequest);
+    }
+
+
 }

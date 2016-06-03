@@ -35,6 +35,15 @@ public class People extends BmobUser {
 
     private BmobRelation UserAtt;//关注
     private BmobPointer eeee;//试一试
+    private String nickname;
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
     public BmobPointer getEeee() {
         return eeee;

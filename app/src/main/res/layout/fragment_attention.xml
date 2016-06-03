@@ -1,13 +1,108 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/whitesmoke"
     tools:context=".fragment.AttentionFragment">
-
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_35"
+        android:background="#584f60"
+        android:gravity="center"
+        android:text="发现"
+        android:textColor="@color/wheat"
+        android:textSize="@dimen/dimen_20"
+    />
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="3" />
+        android:layout_height="fill_parent"
+        android:layout_marginTop="35dp">
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <android.support.v4.view.ViewPager
+                android:id="@+id/tuijian_pager"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+            >
+            </android.support.v4.view.ViewPager>
 
+            <RadioGroup
+                android:id="@+id/radioGroup1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="125dp"
+                android:button="@drawable/btn_radio_holo_light1"
+                android:clickable="false"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:button="@drawable/btn_radio_holo_light1"
+                    android:checked="true"
+                    android:clickable="false"/>
+
+                <RadioButton
+                    android:id="@+id/radio1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:button="@drawable/btn_radio_holo_light1"
+                    android:clickable="false"/>
+
+                <RadioButton
+                    android:id="@+id/radio2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:button="@drawable/btn_radio_holo_light1"
+                    android:clickable="false"/>
+
+                <RadioButton
+                    android:id="@+id/radio3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:button="@drawable/btn_radio_holo_light1"
+                    android:clickable="false"/>
+
+                <RadioButton
+                    android:id="@+id/radio4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:button="@drawable/btn_radio_holo_light1"
+                    android:clickable="false"/>
+            </RadioGroup>
+            <TextView
+                android:id="@+id/attion_useless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tuijian_pager"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:layout_marginRight="@dimen/dimen_5"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:text="你可能感兴趣的主题"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/attion_recy"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@id/attion_useless"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:layout_marginRight="@dimen/dimen_5"
+                android:layout_marginTop="@dimen/dimen_5">
+            </android.support.v7.widget.RecyclerView>
+
+
+        </RelativeLayout>
+
+    </ScrollView>
 </FrameLayout>

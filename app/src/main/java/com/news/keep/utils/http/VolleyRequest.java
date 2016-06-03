@@ -30,7 +30,7 @@ public class VolleyRequest {
                 volleyInterface.errorListener());
         stringRequest.setTag(tag);
         App.getHttpQueues().add(stringRequest);
-        App.getHttpQueues().start();
+        //App.getHttpQueues().start();
     }
 
     public static void RequestPost(Context context, String url, String tag, final Map<String, String> params, VolleyInterface volleyInterface) {
@@ -43,7 +43,7 @@ public class VolleyRequest {
         };
         stringRequest.setTag(tag);
         App.getHttpQueues().add(stringRequest);
-        App.getHttpQueues().start();
+      // App.getHttpQueues().start();
     }
 
 }

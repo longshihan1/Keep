@@ -1,11 +1,13 @@
 package com.news.keep.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.widget.ListView;
 
 import com.alibaba.fastjson.JSON;
@@ -177,4 +179,15 @@ public class Train_add extends AppCompatActivity {
         super.onStop();
         App.getHttpQueues().cancelAll("trainpost");
     }
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Intent intent = new Intent(Train_add.this, MainActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 }

@@ -154,7 +154,7 @@ public class Register1Activity extends AppCompatActivity {
                 people.update(getApplicationContext(), user_id, new UpdateListener() {
                     @Override
                     public void onSuccess() {
-
+                        Log.e("regiest","成功");
                         Intent intent = new Intent(Register1Activity.this, MainActivity.class);
                         startActivity(intent);
                         Register1Activity.this.finish();
@@ -258,8 +258,8 @@ public class Register1Activity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 final People user = new People();
-                                user.setMobilePhoneNumber(phone);
-                                user.setUsername(nick_name);
+                                user.setNickname(nick_name);
+                                user.setUsername(phone);
                                 user.setPassword(password);
                                 user.setPeoage(age_pv);
                                 user.setPeogender(sex_pv);
@@ -267,7 +267,6 @@ public class Register1Activity extends AppCompatActivity {
                                 user.setPeoweight(weight_pv);
                                 user.setPeoimg(user_img);
                                 user.signUp(context, new SaveListener() {
-
                                     @Override
                                     public void onSuccess() {
                                         Message message = Message.obtain();
@@ -275,7 +274,6 @@ public class Register1Activity extends AppCompatActivity {
                                         message.obj = user.getObjectId();
                                         handler.sendMessage(message);
                                     }
-
                                     @Override
                                     public void onFailure(int code, String arg0) {
                                         // 添加失败
@@ -474,6 +472,7 @@ public class Register1Activity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(int code, String msg) {
+                            Log.e("register",code+":"+msg+",");
                             Toast.makeText(Register1Activity.this, "头像上传失败", Toast.LENGTH_SHORT).show();
                         }
                     });

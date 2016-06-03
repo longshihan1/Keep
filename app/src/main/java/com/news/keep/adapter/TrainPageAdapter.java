@@ -127,7 +127,7 @@ public class TrainPageAdapter extends BaseAdapter {
                 Intent intent=new Intent(context,TrainItemDisplay.class);
                 //传递数据
                 Bundle bundle=new Bundle();
-               bundle.putSerializable("map", list);
+                bundle.putSerializable("map", list);
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }

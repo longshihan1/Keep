@@ -181,6 +181,8 @@
             android:layout_height="fill_parent"
             android:layout_marginLeft="@dimen/dimen_10"
             android:layout_marginRight="@dimen/dimen_10"
-            android:background="@color/snow"></ListView>
+            android:background="@color/snow">
+
+        </ListView>
     </LinearLayout>
 </LinearLayout>

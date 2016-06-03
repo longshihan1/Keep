@@ -16,12 +16,15 @@ import com.bmob.BmobConfiguration;
 import com.bmob.BmobPro;
 import com.news.keep.utils.Constans;
 import com.news.keep.utils.SharePreferenceUtils;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 
 import cn.bmob.v3.Bmob;
+import cn.sharesdk.framework.ShareSDK;
 import cn.smssdk.SMSSDK;
 
 /**
@@ -64,6 +67,14 @@ public class App extends Application {
         //初始化sharedSDK的短信SDK
         SMSSDK.initSDK(this, Constans.Mob_SMS_ID, Constans.MOb_SMS_SCRECT);
         SharePreferenceUtils.init(this);
+
+        //创建默认的ImageLoader配置参数
+        ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(this);
+
+        //Initialize ImageLoader with configuration.
+        ImageLoader.getInstance().init(configuration);
+
+        ShareSDK.initSDK(this);
 
         printAppParameter();
     }

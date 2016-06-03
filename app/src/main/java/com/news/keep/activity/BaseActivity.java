@@ -100,6 +100,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         res = this.getApplicationContext().getResources();
 
         baseApp = (App) this.getApplication();
+        getSupportActionBar().hide();
 
         _inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -142,6 +143,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ButterKnife.reset(this);
         baseApp.removeActivity(this);
     }
 
